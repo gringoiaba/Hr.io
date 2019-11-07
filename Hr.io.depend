@@ -1,0 +1,82 @@
+# depslib dependency file v1.0
+1572619044 source:c:\users\eahduarte\hr.io\structs\circle.c
+	<stdio.h>
+	<math.h>
+	"Vector2.h"
+	"Circle.h"
+
+1572619196 source:c:\users\eahduarte\hr.io\structs\enemy.c
+	"Circle.h"
+	"Enemy.h"
+
+1572619992 source:c:\users\eahduarte\hr.io\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<time.h>
+	"Structs/Enemy.h"
+	"Structs/Circle.h"
+	"Structs/Vector2.h"
+
+1572619096 c:\users\eahduarte\hr.io\structs\enemy.h
+	"Circle.h"
+
+1572619111 c:\users\eahduarte\hr.io\structs\circle.h
+	"Vector2.h"
+
+1572619814 c:\users\eahduarte\hr.io\structs\vector2.h
+
+1572620409 source:c:\users\eahduarte\hr.io\structs\vector2.c
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	"Vector2.h"
+
+1573136158 source:\\homes\eahduarte\desktop\hr.io\structs\circle.c
+	<stdio.h>
+	<math.h>
+	"Vector2.h"
+	"Circle.h"
+
+1573135960 \\homes\eahduarte\desktop\hr.io\structs\vector2.h
+
+1573138141 \\homes\eahduarte\desktop\hr.io\structs\circle.h
+	"Vector2.h"
+
+1573138233 source:\\homes\eahduarte\desktop\hr.io\structs\enemy.c
+	"Circle.h"
+	"Enemy.h"
+	"World.h"
+	<math.h>
+	<stdlib.h>
+
+1573138222 \\homes\eahduarte\desktop\hr.io\structs\enemy.h
+	"Circle.h"
+	"World.h"
+
+1573135942 source:\\homes\eahduarte\desktop\hr.io\structs\vector2.c
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	"Vector2.h"
+
+1573135092 source:\\homes\eahduarte\desktop\hr.io\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<time.h>
+	"Structs/Enemy.h"
+	"Structs/Circle.h"
+	"Structs/Vector2.h"
+	"Structs/World.h"
+
+1572964941 \\homes\eahduarte\desktop\hr.io\structs\world.h
+	"Enemy.h"
+	"Circle.h"
+
+1573137190 source:\\homes\eahduarte\desktop\hr.io\structs\world.c
+	"World.h"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
