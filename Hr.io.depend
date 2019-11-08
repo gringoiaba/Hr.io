@@ -80,22 +80,24 @@
 	<stdlib.h>
 	<math.h>
 
-1573221648 source:x:\hr.io\main.c
-	<stdio.h>
+1573223066 source:x:\hr.io\main.c
 	<stdlib.h>
 	<math.h>
 	<time.h>
 	"Structs/Enemy.h"
 	"Structs/Circle.h"
-	"Structs/Vector2.h"
+	"Structs/Vec2.h"
 	"Structs/World.h"
+	"raylib.h"
+	"raylib.h"
+	<math.h>
 
 1573221831 x:\hr.io\structs\enemy.h
 	"Circle.h"
 	"World.h"
 
-1573219816 x:\hr.io\structs\circle.h
-	"Vector2.h"
+1573222827 x:\hr.io\structs\circle.h
+	"Vec2.h"
 
 1573219816 x:\hr.io\structs\vector2.h
 
@@ -103,16 +105,17 @@
 	"Enemy.h"
 	"Circle.h"
 
-1573219816 source:x:\hr.io\structs\circle.c
+1573222769 source:x:\hr.io\structs\circle.c
 	<stdio.h>
 	<math.h>
-	"Vector2.h"
+	"Vec2.h"
 	"Circle.h"
 
-1573219816 source:x:\hr.io\structs\enemy.c
+1573222939 source:x:\hr.io\structs\enemy.c
 	"Circle.h"
 	"Enemy.h"
 	"World.h"
+	"Vec2.h"
 	<math.h>
 	<stdlib.h>
 
@@ -127,4 +130,16 @@
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
+
+1573222858 x:\hr.io\structs\vec2.h
+
+1573222573 x:\hr.io\raylib.h
+	<stdarg.h>
+	<stdbool.h>
+
+1573222791 source:x:\hr.io\structs\vec2.c
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	"Vec2.h"
 

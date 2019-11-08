@@ -5,8 +5,10 @@
 
 #include "Structs/Enemy.h"
 #include "Structs/Circle.h"
-#include "Structs/Vector2.h"
+#include "Structs/Vec2.h"
 #include "Structs/World.h"
+
+#include "raylib.h"
 
 int main(void) {
     int i = 0;
@@ -32,3 +34,5 @@ int main(void) {
 
     return 0;
 }
+
+

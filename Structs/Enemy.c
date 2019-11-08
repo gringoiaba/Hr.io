@@ -1,6 +1,7 @@
 #include "Circle.h"
 #include "Enemy.h"
 #include "World.h"
+#include "Vec2.h"
 #include <math.h>
 #include <stdlib.h>
 
@@ -56,8 +57,8 @@ void updateEnemy (Enemy *self, World w, int index, float delta) {
     }
 }
 
-Vector2 getMovementByAngle(float angle) {
-    Vector2 movement = {
+Vec2 getMovementByAngle(float angle) {
+    Vec2 movement = {
         .x = cosf(angle) * ENEMY_SPEED,
         .y = sinf(angle) * ENEMY_SPEED
     };
@@ -68,16 +69,16 @@ Vector2 getMovementByAngle(float angle) {
 void moveChaser (Enemy *self, World w, int index, float delta) {
     float angleToPlayer = angleBetween (self->ball.position, w.player.position);
 
-    Vector2 movement = getMovementByAngle(angleToPlayer);
-    movement = scaleVector2(movement, delta);
+    Vec2 movement = getMovementByAngle(angleToPlayer);
+    movement = scaleVec2(movement, delta);
 
     moveCircle(&self->ball, movement);
 }
 
 
 void moveDirected (Enemy *self, World w, int index, float delta) {
-    Vector2 movement = getMovementByAngle(self->movingDirection);
-    movement = scaleVector2(movement, delta);
+    Vec2 movement = getMovementByAngle(self->movingDirection);
+    movement = scaleVec2(movement, delta);
 
     moveCircle(&self->ball, movement);
 }
