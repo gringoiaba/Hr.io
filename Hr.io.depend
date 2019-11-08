@@ -143,3 +143,82 @@
 	<stdlib.h>
 	"Vec2.h"
 
+1573233872 source:/home/aluno/Hr.io/main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<time.h>
+	"Structs/Enemy.h"
+	"Structs/Circle.h"
+	"Structs/Vec2.h"
+	"Structs/World.h"
+	"graphics.h"
+
+1573230895 /home/aluno/Hr.io/Structs/Enemy.h
+	"Circle.h"
+	"World.h"
+
+1573230895 /home/aluno/Hr.io/Structs/Circle.h
+	"Vec2.h"
+
+1573236050 /home/aluno/Hr.io/Structs/Vec2.h
+
+1573236957 /home/aluno/Hr.io/Structs/World.h
+	"Enemy.h"
+	"Circle.h"
+
+1573230895 /home/aluno/Hr.io/raylib.h
+	<stdarg.h>
+	<stdbool.h>
+
+1573230895 source:/home/aluno/Hr.io/Structs/Circle.c
+	<stdio.h>
+	<math.h>
+	"Vec2.h"
+	"Circle.h"
+
+1573236075 source:/home/aluno/Hr.io/Structs/Enemy.c
+	"Circle.h"
+	"Enemy.h"
+	"World.h"
+	"Vec2.h"
+	<math.h>
+	<stdlib.h>
+
+1573235537 source:/home/aluno/Hr.io/Structs/World.c
+	"World.h"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"../input.h"
+
+1573236034 source:/home/aluno/Hr.io/Structs/Vec2.c
+	<stdio.h>
+	<math.h>
+	<stdlib.h>
+	"Vec2.h"
+
+1573236943 source:/home/aluno/Hr.io/graphics.c
+	"graphics.h"
+	"raylib.h"
+	"Structs/Vec2.h"
+	"Structs/Circle.h"
+	"Structs/World.h"
+	"Structs/Enemy.h"
+
+1573236459 /home/aluno/Hr.io/graphics.h
+	"Structs/World.h"
+	"Structs/Vec2.h"
+	"raylib.h"
+
+1573236901 source:/home/aluno/Hr.io/input.c
+	"input.h"
+	"Structs/World.h"
+	"Structs/Circle.h"
+	"Structs/Vec2.h"
+	"graphics.h"
+	"raylib.h"
+
+1573236205 /home/aluno/Hr.io/input.h
+	"Structs/World.h"
+

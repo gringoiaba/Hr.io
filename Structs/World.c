@@ -3,9 +3,14 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "../input.h"
+
 void updateWorld(World *w, float deltaTime) {
     respawnEnemies(w);
     respawnFoods(w);
+
+    updateInput(w, deltaTime);
+
     updateEnemies(w, deltaTime);
     checkCollisions(w);
     checkFoods(w);
@@ -20,7 +25,6 @@ void checkCollisions(World *w) {
     if (w->player.isAlive) {
         for (i = 0; i < NUM_ENEMIES; i++) {
             if (w->enemies[i].ball.isAlive && isInside(w->enemies[i].ball.position, w->player)) {
-                printf("O player comeu o inimigo %d!\n", i);
                 killEnemy(w, &w->player, -1, &w->enemies[i], i);
             }
         }
@@ -39,7 +43,6 @@ void checkCollisions(World *w) {
 
             // If enemy i eats enemy j...
             if (w->enemies[j].ball.isAlive && isInside(w->enemies[j].ball.position, w->enemies[i].ball)) {
-                printf("O inimigo %d comeu o inimigo %d!\n", i, j);
                 killEnemy(w,
                           &w->enemies[i].ball,
                           i,
@@ -49,7 +52,6 @@ void checkCollisions(World *w) {
 
         }
         if (w->player.isAlive && isInside(w->player.position, w->enemies[i].ball)) {
-            printf("O inimigo %d comeu o player!\n", i);
             killPlayer(w, &w->enemies[i], i);
         }
 
@@ -65,7 +67,6 @@ void checkFoods (World *w) {
     if (w->player.isAlive) {
         for (i = 0; i < NUM_FOOD; i++) {
             if (w->foods[i].isAlive && isInside(w->foods[i].position, w->player)) {
-                printf("O player comeu a frutinha %d!\n", i);
                 w->foods[i].isAlive = 0;
                 w->player.radius = newRadius(w->player, w->foods[i]);
             }
@@ -81,7 +82,6 @@ void checkFoods (World *w) {
 
             if (w->foods[j].isAlive && isInside(w->foods[j].position, w->enemies[i].ball)) {
                 w->foods[j].isAlive = 0;
-                printf("O inimigo %d comeu a frutinha %d!\n", i, j);
                 w->enemies[i].ball.radius = newRadius(w->enemies[i].ball, w->foods[j]);
             }
         }
@@ -99,7 +99,6 @@ void printWorld(World w) {
     printf("\n");
     for (i = 0; i < NUM_ENEMIES; i++) {
         if (w.enemies[i].ball.isAlive) {
-            printf("Enemy %d: ", i);
             printBall(w.enemies[i].ball);
             printf("\n  MoveType: %s ", enemyMoveTypeToString(w.enemies[i].moveType));
             printf("\n  ElementalType: %s", enemyElementalTypeToString(w.enemies[i].elementalType));
@@ -108,7 +107,6 @@ void printWorld(World w) {
     }
     for (i = 0; i < NUM_FOOD; i++) {
         if (w.foods[i].isAlive) {
-            printf("Food %d: ", i);
             printBall(w.foods[i]);
             printf("\n");
         }

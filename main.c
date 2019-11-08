@@ -8,7 +8,7 @@
 #include "Structs/Vec2.h"
 #include "Structs/World.h"
 
-#include "raylib.h"
+#include "graphics.h"
 
 int main(void) {
     int i = 0;
@@ -24,13 +24,15 @@ int main(void) {
         .player = b,
     };
 
-    for (i = 0; i < 20; i++) {
-        updateWorld(&w, 1/(float)10);
-        printWorld(w);
+    initGraphics();
 
-        getchar();
-        system("cls");
+    while (isGraphicsRunning())
+    {
+        updateWorld(&w, 1/(float)60);
+        drawWorld(w);
     }
+
+    endGraphics();
 
     return 0;
 }

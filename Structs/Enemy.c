@@ -57,19 +57,16 @@ void updateEnemy (Enemy *self, World w, int index, float delta) {
     }
 }
 
-Vec2 getMovementByAngle(float angle) {
-    Vec2 movement = {
-        .x = cosf(angle) * ENEMY_SPEED,
-        .y = sinf(angle) * ENEMY_SPEED
-    };
-
-    return movement;
-}
-
 void moveChaser (Enemy *self, World w, int index, float delta) {
+
+    if (!w.player.isAlive) {
+        moveRandom(self, w, index, delta);
+        return;
+    }
+
     float angleToPlayer = angleBetween (self->ball.position, w.player.position);
 
-    Vec2 movement = getMovementByAngle(angleToPlayer);
+    Vec2 movement = getMovementByAngle(angleToPlayer, ENEMY_SPEED);
     movement = scaleVec2(movement, delta);
 
     moveCircle(&self->ball, movement);
@@ -77,7 +74,7 @@ void moveChaser (Enemy *self, World w, int index, float delta) {
 
 
 void moveDirected (Enemy *self, World w, int index, float delta) {
-    Vec2 movement = getMovementByAngle(self->movingDirection);
+    Vec2 movement = getMovementByAngle(self->movingDirection, ENEMY_SPEED);
     movement = scaleVec2(movement, delta);
 
     moveCircle(&self->ball, movement);

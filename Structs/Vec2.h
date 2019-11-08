@@ -11,5 +11,6 @@ float distance(Vec2, Vec2);
 float angleBetween (Vec2, Vec2);
 Vec2 addVec2(Vec2, Vec2);
 Vec2 scaleVec2(Vec2, float);
+Vec2 getMovementByAngle(float, float);
 
 #endif

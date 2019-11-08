@@ -4,8 +4,8 @@
 #ifndef STRUCTS_WORLD_H
 #define STRUCTS_WORLD_H
 
-#define NUM_ENEMIES 5
-#define NUM_FOOD 10
+#define NUM_ENEMIES 100
+#define NUM_FOOD 200
 
 #define FOOD_RADIUS 4
 #define BASE_RADIUS 10

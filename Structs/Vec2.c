@@ -30,6 +30,15 @@ float angleBetween (Vec2 a, Vec2 b) {
     return atan2f(b.y - a.y, b.x - a.x);
 }
 
+Vec2 getMovementByAngle(float angle, float speed) {
+    Vec2 movement = {
+        .x = cosf(angle) * speed,
+        .y = sinf(angle) * speed
+    };
+
+    return movement;
+}
+
 Vec2 addVec2(Vec2 a, Vec2 b) {
     Vec2 result = {
         .x = a.x + b.x,
