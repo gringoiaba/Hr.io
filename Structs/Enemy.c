@@ -99,7 +99,7 @@ float randomRadian() {
 }
 
 // Kills an enemy
-void killEnemy(World* w, Enemy* killer, int killerIndex, Enemy* killed, int killedIndex) {
+void killEnemy(World* w, Ball* killer, int killerIndex, Enemy* killed, int killedIndex) {
 
     // Do not kill the dead...
     if (!killed->ball.isAlive) {
@@ -118,6 +118,8 @@ void killEnemy(World* w, Enemy* killer, int killerIndex, Enemy* killed, int kill
         // poisonKiller(killer);
         break;
     }
+
+    killer->radius = newRadius(*killer, killed->ball);
 }
 
 void explodeEnemy(World* w, Enemy* e, int index) {
@@ -132,7 +134,13 @@ void explodeEnemy(World* w, Enemy* e, int index) {
 
         // If is inside explosion radius...
         if (distance(e->ball.position, w->enemies[i].ball.position) <= explosionRadius) {
-            killEnemy(w, e, index, &w->enemies[i], i);
+            killEnemy(w, &e->ball, index, &w->enemies[i], i);
+        }
+    }
+
+    if (w->player.isAlive) {
+        if (distance(e->ball.position, w->player.position) <= explosionRadius) {
+            killPlayer(w, e, index);
         }
     }
 }

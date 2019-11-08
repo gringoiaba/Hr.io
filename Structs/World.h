@@ -31,5 +31,6 @@ void respawnFoods (World*);
 void printWorld(World);
 void respawnEnemies(World*);
 void updateEnemies(World*, float);
+void killPlayer(World*, Enemy*, int);
 
 #endif // STRUCTS_WORLD_H

@@ -21,8 +21,7 @@ void checkCollisions(World *w) {
         for (i = 0; i < NUM_ENEMIES; i++) {
             if (w->enemies[i].ball.isAlive && isInside(w->enemies[i].ball.position, w->player)) {
                 printf("O player comeu o inimigo %d!\n", i);
-                w->enemies[i].ball.isAlive = 0;
-                w->player.radius = newRadius(w->player, w->enemies[i].ball);
+                killEnemy(w, &w->player, -1, &w->enemies[i], i);
             }
         }
     }
@@ -34,21 +33,24 @@ void checkCollisions(World *w) {
         }
 
         for (j = 0; j < NUM_ENEMIES; j++) {
-            if (i == j){
+            if (i == j) {
                 continue;
             }
 
+            // If enemy i eats enemy j...
             if (w->enemies[j].ball.isAlive && isInside(w->enemies[j].ball.position, w->enemies[i].ball)) {
-                w->enemies[j].ball.isAlive = 0;
                 printf("O inimigo %d comeu o inimigo %d!\n", i, j);
-                w->enemies[i].ball.radius = newRadius(w->enemies[i].ball, w->enemies[j].ball);
+                killEnemy(w,
+                          &w->enemies[i].ball,
+                          i,
+                          &w->enemies[j],
+                          j);
             }
 
         }
         if (w->player.isAlive && isInside(w->player.position, w->enemies[i].ball)) {
-            w->player.isAlive = 0;
             printf("O inimigo %d comeu o player!\n", i);
-            w->enemies[i].ball.radius = newRadius(w->enemies[i].ball, w->player);
+            killPlayer(w, &w->enemies[i], i);
         }
 
 
@@ -152,4 +154,9 @@ void updateEnemies(World *w, float delta) {
     for (i = 0; i < NUM_ENEMIES; i++) {
         updateEnemy(&w->enemies[i], *w, i, delta);
     }
+}
+
+void killPlayer(World* w, Enemy* killer, int index) {
+    w->player.isAlive = 0;
+    killer->ball.radius = newRadius(killer->ball, w->player);
 }

@@ -35,7 +35,7 @@ void moveChaser (Enemy*, World, int, float);
 void moveDirected (Enemy*, World, int, float);
 void moveRandom (Enemy*, World, int, float);
 float randomRadian();
-void killEnemy(World*, Enemy*, int, Enemy*, int);
+void killEnemy(World*, Ball*, int, Enemy*, int);
 void explodeEnemy(World*, Enemy*, int);
 
 #endif
