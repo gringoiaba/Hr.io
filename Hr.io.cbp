@@ -39,10 +39,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Structs/Enemy.h" />
-		<Unit filename="Structs/Vector2.c">
+		<Unit filename="Structs/Vec2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Structs/Vector2.h" />
+		<Unit filename="Structs/Vec2.h" />
 		<Unit filename="Structs/World.c">
 			<Option compilerVar="CC" />
 		</Unit>
