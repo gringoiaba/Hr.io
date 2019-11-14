@@ -3,17 +3,26 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include "World.h"
 #include "../input.h"
 
 void updateWorld(World *w, float deltaTime) {
+    w->elapsedTime += deltaTime;
+
     respawnEnemies(w);
     respawnFoods(w);
 
     updateInput(w, deltaTime);
 
     updateEnemies(w, deltaTime);
+
+    updatePoison(w, deltaTime);
+
     checkCollisions(w);
     checkFoods(w);
+
+    // Moves everything that is simply too far away from the player
+    moveUnused(w);
 }
 
 // Checks if circles are being eaten,
@@ -118,10 +127,10 @@ void respawnFoods(World *w) {
     for (i = 0; i < NUM_FOOD; i++) {
         if (!w->foods[i].isAlive) {
             w->foods[i].isAlive = 1;
-            w->foods[i].position = randomPosition(WORLD_LEFT_BOUNDARY,
-                                                  WORLD_RIGHT_BOUNDARY,
-                                                  WORLD_TOP_BOUNDARY,
-                                                  WORLD_BOTTOM_BOUNDARY);
+            w->foods[i].position = randomPosition(WORLD_LEFT_BOUNDARY + w->player.position.x,
+                                                  WORLD_RIGHT_BOUNDARY + w->player.position.x,
+                                                  WORLD_TOP_BOUNDARY + w->player.position.y,
+                                                  WORLD_BOTTOM_BOUNDARY + w->player.position.y);
             w->foods[i].radius = FOOD_RADIUS;
         }
     }
@@ -134,15 +143,16 @@ void respawnEnemies(World *w) {
     for (i = 0; i < NUM_ENEMIES; i++) {
         if (!w->enemies[i].ball.isAlive) {
             w->enemies[i].ball.isAlive = 1;
-            w->enemies[i].ball.position = randomPosition(WORLD_LEFT_BOUNDARY,
-                                                         WORLD_RIGHT_BOUNDARY,
-                                                         WORLD_TOP_BOUNDARY,
-                                                         WORLD_BOTTOM_BOUNDARY);
+            w->enemies[i].ball.position = randomPosition(WORLD_LEFT_BOUNDARY + w->player.position.x,
+                                                         WORLD_RIGHT_BOUNDARY + w->player.position.x,
+                                                         WORLD_TOP_BOUNDARY + w->player.position.y,
+                                                         WORLD_BOTTOM_BOUNDARY + w->player.position.y);
             w->enemies[i].moveType = rand()%4;
             w->enemies[i].movingDirection = randomRadian();
             w->enemies[i].timeEllapsedSinceLastSwitch = 0;
             w->enemies[i].elementalType = rand()%3;
             w->enemies[i].ball.radius = BASE_RADIUS;
+            w->enemies[i].ball.poisonTimeRemaining = 0;
         }
     }
 }
@@ -157,4 +167,50 @@ void updateEnemies(World *w, float delta) {
 void killPlayer(World* w, Enemy* killer, int index) {
     w->player.isAlive = 0;
     killer->ball.radius = newRadius(killer->ball, w->player);
+}
+
+void updatePoison(World *w, float delta) {
+    int i;
+
+    for (i = 0; i < NUM_ENEMIES; i++) {
+        // If is poisoned...
+        if (w->enemies[i].ball.poisonTimeRemaining > 0) {
+            Ball* b = &w->enemies[i].ball;
+
+            float area = radiusToArea(b->radius);
+            area -= area * 0.1f * delta;
+
+            b->radius = areaToRadius(area);
+
+            b->poisonTimeRemaining -= delta;
+        }
+    }
+
+    if (w->player.poisonTimeRemaining > 0) {
+        Ball* b = &w->player;
+
+        float area = radiusToArea(b->radius);
+        // Reduce the area by 1% per second
+        area -= area * 0.1f * delta;
+
+        b->radius = areaToRadius(area);
+
+        b->poisonTimeRemaining -= delta;
+    }
+}
+
+void moveUnused(World* w) {
+    int i;
+
+    for (i = 0; i < NUM_ENEMIES; i++) {
+        if (distance(w->enemies[i].ball.position, w->player.position) > MAX_PLAYER_DISTANCE) {
+            w->enemies[i].ball.isAlive = 0;
+        }
+    }
+
+    for (i = 0; i < NUM_FOOD; i++) {
+        if (distance(w->foods[i].position, w->player.position) > MAX_PLAYER_DISTANCE) {
+            w->foods[i].isAlive = 0;
+        }
+    }
 }

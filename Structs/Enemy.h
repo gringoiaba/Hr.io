@@ -37,5 +37,6 @@ void moveRandom (Enemy*, World, int, float);
 float randomRadian();
 void killEnemy(World*, Ball*, int, Enemy*, int);
 void explodeEnemy(World*, Enemy*, int);
+void poisonKiller(Ball*);
 
 #endif

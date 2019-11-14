@@ -11,13 +11,13 @@
 #include "graphics.h"
 
 int main(void) {
-    int i = 0;
     srand(time(NULL));
 
     Ball b = {
-        position: { 0, 0 },
-        isAlive: 1,
-        radius: BASE_RADIUS
+        .position = { 0, 0 },
+        .isAlive = 1,
+        .radius = BASE_RADIUS,
+        .poisonTimeRemaining = 0
     };
 
     World w = {

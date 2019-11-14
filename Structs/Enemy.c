@@ -12,6 +12,8 @@
 
 #define RAD_TO_DEG (180.0 / M_PI);
 
+#define POISON_TIME 5
+
 char* enemyMoveTypeToString(EnemyMoveType t) {
     switch (t) {
     case STATIC:
@@ -113,7 +115,7 @@ void killEnemy(World* w, Ball* killer, int killerIndex, Enemy* killed, int kille
         explodeEnemy(w, killed, killedIndex);
         break;
     case POISONOUS:
-        // poisonKiller(killer);
+        poisonKiller(killer);
         break;
     }
 
@@ -141,4 +143,8 @@ void explodeEnemy(World* w, Enemy* e, int index) {
             killPlayer(w, e, index);
         }
     }
+}
+
+void poisonKiller(Ball* killer) {
+    killer->poisonTimeRemaining += POISON_TIME;
 }

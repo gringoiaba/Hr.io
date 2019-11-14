@@ -12,5 +12,6 @@ void drawWorld(World);
 void endGraphics();
 int isGraphicsRunning();
 Vector2 vec2ToVector2(Vec2);
+void drawCircle(Ball, Color);
 
 #endif // GRAPHICS_H

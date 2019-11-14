@@ -4,6 +4,7 @@
 #include "Structs/Circle.h"
 #include "Structs/World.h"
 #include "Structs/Enemy.h"
+#include <stdio.h>
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -32,7 +33,18 @@ void drawWorld(World w) {
 
 
             if (w.player.isAlive) {
-                drawCircle(w.player, VIOLET);
+                Color c = VIOLET;
+
+
+                // Make poisoned balls flicker
+                int time = (int)(w.player.poisonTimeRemaining * 3);
+                if (time % 2 == 1) {
+                    // "mix" the colors togehter
+
+                    c = GetColor((ColorToInt(GREEN) + ColorToInt(c)) / 2);
+                }
+
+                drawCircle(w.player, c);
             }
 
             for (i = 0; i < NUM_ENEMIES; i++) {
@@ -51,6 +63,13 @@ void drawWorld(World w) {
                         break;
                     }
 
+                    // Make poisoned balls flicker
+                    int time = (int)(w.enemies[i].ball.poisonTimeRemaining * 3);
+                    if (time % 2 == 1) {
+                        // "mix" the colors togehter
+                        c = GetColor((ColorToInt(GREEN) + ColorToInt(c)) / 2);
+                    }
+
                     drawCircle(w.enemies[i].ball, c);
                 }
             }
@@ -62,6 +81,11 @@ void drawWorld(World w) {
             }
 
         EndMode2D();
+
+    char mensagem[51];
+    sprintf(mensagem, "Score: %.1f", w.elapsedTime);
+
+    DrawText(mensagem, 0, 0, 52, BLACK);
 
     EndDrawing();
 }

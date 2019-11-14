@@ -7,6 +7,8 @@ typedef struct {
     Vec2 position;
     int isAlive;
     float radius;
+
+    float poisonTimeRemaining;
 } Ball;
 
 float newRadius (Ball, Ball);

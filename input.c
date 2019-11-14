@@ -16,9 +16,7 @@ void updateInput(World* w, float delta) {
 }
 
 void movePlayer(World* w, float delta) {
-
     Vec2 mousePos = vector2ToVec2(GetScreenToWorld2D(GetMousePosition(), cam));
-    printVec2(mousePos);
 
     float angle = angleBetween(w->player.position, mousePos);
 
