@@ -20,7 +20,15 @@
 
 #define MAX_PLAYER_DISTANCE 1500
 
+typedef enum {
+    PLAYING,
+    GAME_OVER,
+    MAIN_MENU
+} WorldState;
+
 typedef struct {
+    WorldState state;
+
     Ball player;
     Enemy enemies[NUM_ENEMIES];
     Ball foods[NUM_FOOD];
@@ -36,5 +44,7 @@ void respawnEnemies(World*);
 void updateEnemies(World*, float);
 void killPlayer(World*, Enemy*, int);
 void updatePoison(World*, float);
+void moveUnused(World*);
+void updatePlaying(World*, float);
 
 #endif // STRUCTS_WORLD_H

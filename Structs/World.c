@@ -7,6 +7,15 @@
 #include "../input.h"
 
 void updateWorld(World *w, float deltaTime) {
+
+    switch (w->state) {
+    case PLAYING:
+        updatePlaying(w, deltaTime);
+        break;
+    }
+}
+
+void updatePlaying(World* w, float deltaTime) {
     w->elapsedTime += deltaTime;
 
     respawnEnemies(w);
@@ -167,6 +176,8 @@ void updateEnemies(World *w, float delta) {
 void killPlayer(World* w, Enemy* killer, int index) {
     w->player.isAlive = 0;
     killer->ball.radius = newRadius(killer->ball, w->player);
+
+    w->state = GAME_OVER;
 }
 
 void updatePoison(World *w, float delta) {

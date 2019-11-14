@@ -23,21 +23,15 @@ void drawWorld(World w) {
 
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
-
     switch (w.state) {
     case PLAYING:
-        drawPlaying(w, 1);
-        break;
-    case GAME_OVER:
-        drawGameOver(w);
-        break;
+        drawPlaying(w);
     }
 
     EndDrawing();
 }
 
-void drawPlaying(World w, int showScore) {
+void drawPlaying(World w) {
     int i;
 
     cam.target = vec2ToVector2(w.player.position);
@@ -46,6 +40,8 @@ void drawPlaying(World w, int showScore) {
 
 
         BeginMode2D(cam);
+
+            ClearBackground(RAYWHITE);
 
 
             if (w.player.isAlive) {
@@ -98,31 +94,10 @@ void drawPlaying(World w, int showScore) {
 
         EndMode2D();
 
-    if (showScore) {
-        char mensagem[51];
-        sprintf(mensagem, "Score: %.1f", w.elapsedTime);
+    char mensagem[51];
+    sprintf(mensagem, "Score: %.1f", w.elapsedTime);
 
-        DrawText(mensagem, 0, 0, 52, BLACK);
-    }
-}
-
-void drawGameOver(World w) {
-    drawPlaying(w, 0);
-
-    // Make the world a bit darker
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.1));
-
-    char totalPoints[51];
-    sprintf(totalPoints, "Your total score was %.1f", w.elapsedTime);
-
-    float totalPointsLength = MeasureText(totalPoints, 42);
-    float gameOverLength = MeasureText("Game Over!", 56);
-
-    float gameOverY = (GetScreenHeight() - 56) / 2;
-    float totalPointsY = gameOverY + 56;
-
-    DrawText("Game Over", (GetScreenWidth() - gameOverLength) / 2, gameOverY, 56, BLACK);
-    DrawText(totalPoints, (GetScreenWidth() - totalPointsLength) / 2, totalPointsY, 42, BLACK);
+    DrawText(mensagem, 0, 0, 52, BLACK);
 }
 
 

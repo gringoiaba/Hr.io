@@ -13,5 +13,7 @@ void endGraphics();
 int isGraphicsRunning();
 Vector2 vec2ToVector2(Vec2);
 void drawCircle(Ball, Color);
+void drawPlaying(World, int);
+void drawGameOver(World);
 
 #endif // GRAPHICS_H

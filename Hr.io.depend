@@ -80,7 +80,7 @@
 	<stdlib.h>
 	<math.h>
 
-1573740146 source:x:\hr.io\main.c
+1573743490 source:x:\hr.io\main.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -100,7 +100,7 @@
 
 1573219816 x:\hr.io\structs\vector2.h
 
-1573741630 x:\hr.io\structs\world.h
+1573742336 x:\hr.io\structs\world.h
 	"Enemy.h"
 	"Circle.h"
 
@@ -124,11 +124,12 @@
 	<stdlib.h>
 	"Vector2.h"
 
-1573741299 source:x:\hr.io\structs\world.c
+1573742193 source:x:\hr.io\structs\world.c
 	"World.h"
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
+	"World.h"
 	"../input.h"
 
 1573738023 x:\hr.io\structs\vec2.h
@@ -222,7 +223,7 @@
 1573236205 /home/aluno/Hr.io/input.h
 	"Structs/World.h"
 
-1573741379 source:x:\hr.io\graphics.c
+1573743417 source:x:\hr.io\graphics.c
 	"graphics.h"
 	"raylib.h"
 	"Structs/Vec2.h"
@@ -231,7 +232,7 @@
 	"Structs/Enemy.h"
 	<stdio.h>
 
-1573741019 x:\hr.io\graphics.h
+1573743309 x:\hr.io\graphics.h
 	"Structs/World.h"
 	"Structs/Vec2.h"
 	"raylib.h"

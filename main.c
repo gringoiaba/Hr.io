@@ -22,6 +22,7 @@ int main(void) {
 
     World w = {
         .player = b,
+        .state = PLAYING,
     };
 
     initGraphics();
