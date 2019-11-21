@@ -5,13 +5,15 @@
 #include "Structs/World.h"
 #include "Structs/Enemy.h"
 #include <stdio.h>
+#include "input.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+Font alagard;
 
 void initGraphics() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hr.io");
     SetTargetFPS(60);
+
+    alagard = LoadFont("res/alagard.png");
 
 
     cam = (Camera2D) { 0 };
@@ -123,6 +125,15 @@ void drawGameOver(World w) {
 
     DrawText("Game Over", (GetScreenWidth() - gameOverLength) / 2, gameOverY, 56, BLACK);
     DrawText(totalPoints, (GetScreenWidth() - totalPointsLength) / 2, totalPointsY, 42, BLACK);
+
+    Color c = VIOLET;
+
+    if (pointInRect(GAME_OVER_BUTTON, GetMousePosition())) {
+        c = RED;
+    }
+
+    DrawRectangleRec(GAME_OVER_BUTTON, c);
+    DrawTextRec(alagard, "Restart", centerText(GAME_OVER_BUTTON, "Restart", 50), 50, 1, 0, WHITE);
 }
 
 
@@ -131,6 +142,7 @@ void drawCircle(Ball b, Color c) {
 }
 
 void endGraphics() {
+    UnloadFont(alagard);
     CloseWindow();
 }
 
@@ -144,5 +156,16 @@ Vector2 vec2ToVector2(Vec2 v) {
     res.x = v.x;
     res.y = v.y;
 
+    return res;
+}
+
+Rectangle centerText(Rectangle rec, char* txt, int size) {
+    float len = MeasureTextEx(alagard, txt, size, 1).x;
+    Rectangle res = {
+        .x = rec.x + rec.width/2 - len/2,
+        .y = rec.y,
+        .width = len,
+        .height = rec.height
+    };
     return res;
 }

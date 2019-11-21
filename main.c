@@ -13,17 +13,7 @@
 int main(void) {
     srand(time(NULL));
 
-    Ball b = {
-        .position = { 0, 0 },
-        .isAlive = 1,
-        .radius = BASE_RADIUS,
-        .poisonTimeRemaining = 0
-    };
-
-    World w = {
-        .player = b,
-        .state = PLAYING,
-    };
+    World w = newWorld();
 
     initGraphics();
 

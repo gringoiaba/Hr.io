@@ -7,6 +7,7 @@
 #include "../input.h"
 
 void updateWorld(World *w, float deltaTime) {
+    updateInput(w, deltaTime);
 
     switch (w->state) {
     case PLAYING:
@@ -20,8 +21,6 @@ void updatePlaying(World* w, float deltaTime) {
 
     respawnEnemies(w);
     respawnFoods(w);
-
-    updateInput(w, deltaTime);
 
     updateEnemies(w, deltaTime);
 
@@ -224,4 +223,20 @@ void moveUnused(World* w) {
             w->foods[i].isAlive = 0;
         }
     }
+}
+
+World newWorld() {
+    Ball b = {
+        .position = { 0, 0 },
+        .isAlive = 1,
+        .radius = BASE_RADIUS,
+        .poisonTimeRemaining = 0
+    };
+
+    World w = {
+        .player = b,
+        .state = GAME_OVER,
+    };
+
+    return w;
 }

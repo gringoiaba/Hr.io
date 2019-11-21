@@ -4,14 +4,19 @@
 #include "Structs/Vec2.h"
 #include "graphics.h"
 #include "raylib.h"
+#include <stdio.h>
 
 #define PLAYER_SPEED 100
 
 void updateInput(World* w, float delta) {
-    movePlayer(w, delta);
+    switch (w->state) {
+    case PLAYING:
+        updateInputPlaying(w, delta);
+        break;
+    case GAME_OVER:
+        updateInputGameOver(w, delta);
+        break;
 
-    if (IsKeyDown(KEY_SPACE)) {
-        w->player.radius += delta * 10;
     }
 }
 
@@ -31,4 +36,26 @@ Vec2 vector2ToVec2(Vector2 v) {
         v.x,
         v.y
     };
+}
+
+void updateInputPlaying(World *w, float delta) {
+    movePlayer(w, delta);
+
+    if (IsKeyDown(KEY_SPACE)) {
+        w->player.radius += delta * 10;
+    }
+}
+
+void updateInputGameOver(World* w, float delta) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && pointInRect(GAME_OVER_BUTTON, GetMousePosition())){
+        *w = newWorld();
+        w->state = PLAYING;
+    }
+}
+
+int pointInRect(Rectangle r, Vector2 v) {
+    return v.x < r.width + r.x &&
+            v.x > r.x &&
+            v.y < r.y + r.height &&
+            v.y > r.y;
 }

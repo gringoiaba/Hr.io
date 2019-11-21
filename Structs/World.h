@@ -46,5 +46,7 @@ void killPlayer(World*, Enemy*, int);
 void updatePoison(World*, float);
 void moveUnused(World*);
 void updatePlaying(World*, float);
+World newWorld();
+
 
 #endif // STRUCTS_WORLD_H
