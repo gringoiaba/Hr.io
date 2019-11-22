@@ -15,6 +15,8 @@ int main(void) {
 
     World w = newWorld();
 
+    w.state = MAIN_MENU;
+
     initGraphics();
 
     while (isGraphicsRunning())

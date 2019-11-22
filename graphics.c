@@ -7,18 +7,23 @@
 #include <stdio.h>
 #include "input.h"
 
+#define newVector2(x, y) ((Vector2) {x, y})
+
 Font alagard;
 
 void initGraphics() {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hr.io");
     SetTargetFPS(60);
 
-    alagard = LoadFont("res/alagard.png");
+    isRunning = 1;
 
+    alagard = LoadFont("res/alagard.png");
 
     cam = (Camera2D) { 0 };
     cam.offset = (Vector2) { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
     cam.zoom = 1.0f;
+
+    SetExitKey(0);
 }
 
 void drawWorld(World w) {
@@ -34,7 +39,15 @@ void drawWorld(World w) {
     case GAME_OVER:
         drawGameOver(w);
         break;
+    case MAIN_MENU:
+        drawMainMenu(w);
+        break;
+    case PAUSE_MENU:
+        drawPauseMenu(w);
+        break;
     }
+
+    DrawFPS(0, 0);
 
     EndDrawing();
 }
@@ -117,23 +130,23 @@ void drawGameOver(World w) {
     char totalPoints[51];
     sprintf(totalPoints, "Your total score was %.1f", w.elapsedTime);
 
-    float totalPointsLength = MeasureText(totalPoints, 42);
-    float gameOverLength = MeasureText("Game Over!", 56);
+    DrawTextRec(alagard, "Game Over", centerText(GAME_OVER_LABEL, "Game Over", 56), 56, 1, 0, BLACK);
+    DrawTextRec(alagard, totalPoints, centerText(GAME_OVER_SCORE_LABEL, totalPoints, 42), 42, 1, 0, BLACK);
 
-    float gameOverY = (GetScreenHeight() - 56) / 2;
-    float totalPointsY = gameOverY + 56;
-
-    DrawText("Game Over", (GetScreenWidth() - gameOverLength) / 2, gameOverY, 56, BLACK);
-    DrawText(totalPoints, (GetScreenWidth() - totalPointsLength) / 2, totalPointsY, 42, BLACK);
-
-    Color c = VIOLET;
+    Color restart = BLACK,
+          menu = BLACK;
 
     if (pointInRect(GAME_OVER_BUTTON, GetMousePosition())) {
-        c = RED;
+        restart = WHITE;
+    } else if (pointInRect(GAME_OVER_MENU_BUTTON, GetMousePosition())) {
+          menu = WHITE;
     }
 
-    DrawRectangleRec(GAME_OVER_BUTTON, c);
-    DrawTextRec(alagard, "Restart", centerText(GAME_OVER_BUTTON, "Restart", 50), 50, 1, 0, WHITE);
+    DrawRectangleRec(GAME_OVER_BUTTON, restart);
+    DrawTextRec(alagard, "Restart", centerText(GAME_OVER_BUTTON, "Restart", 51), 51, 1, 0, complementaryColor(restart));
+
+
+    drawButton("Main Menu", GAME_OVER_MENU_BUTTON, menu, 51);
 }
 
 
@@ -147,7 +160,7 @@ void endGraphics() {
 }
 
 int isGraphicsRunning() {
-    return !WindowShouldClose();
+    return isRunning;
 }
 
 Vector2 vec2ToVector2(Vec2 v) {
@@ -160,12 +173,83 @@ Vector2 vec2ToVector2(Vec2 v) {
 }
 
 Rectangle centerText(Rectangle rec, char* txt, int size) {
-    float len = MeasureTextEx(alagard, txt, size, 1).x;
+    Vector2 len = MeasureTextEx(alagard, txt, size, 1);
+
     Rectangle res = {
-        .x = rec.x + rec.width/2 - len/2,
+        .x = rec.x + rec.width/2 - len.x/2,
         .y = rec.y,
-        .width = len,
-        .height = rec.height
+        .width = len.x,
+        .height = len.y
     };
+
     return res;
+}
+
+Color complementaryColor(Color c) {
+    return (Color) {
+        .r = ~c.r,
+        .g = ~c.g,
+        .b = ~c.b,
+        .a = 255
+    };
+}
+
+void drawMainMenu(World w) {
+
+    drawPlaying(w, 0);
+
+    DrawTextRec(alagard, "H r . i o", centerText(MAIN_MENU_TITLE_LABEL, "H r . i o", 100), 100, 1, 0, BLACK);
+
+    Color start = BLACK,
+          load = BLACK,
+          hiscore = BLACK,
+          exit = BLACK;
+
+    if (pointInRect(MAIN_MENU_START_BUTTON, GetMousePosition())) {
+        start = WHITE;
+    } else if (pointInRect(MAIN_MENU_LOAD_BUTTON, GetMousePosition())) {
+          load = WHITE;
+    } else if (pointInRect(MAIN_MENU_HISCORE_BUTTON, GetMousePosition())) {
+          hiscore = WHITE;
+    } else if (pointInRect(MAIN_MENU_EXIT_BUTTON, GetMousePosition())) {
+          exit = RED;
+    }
+
+    drawButton("Start", MAIN_MENU_START_BUTTON, start, 51);
+
+    // HACK: Raylib doesn't like 4-length strings for some reason????
+    // Might need to fix this in the raylib code itself
+    drawButton("Load ", MAIN_MENU_LOAD_BUTTON, load, 51);
+
+    drawButton("High Scores", MAIN_MENU_HISCORE_BUTTON, hiscore, 51);
+    drawButton("Exit", MAIN_MENU_EXIT_BUTTON, exit, 51);
+}
+
+void drawButton(char* label, Rectangle rec, Color c, int fontSize) {
+    DrawRectangleRec(rec, c);
+    DrawTextRec(alagard, label, centerText(rec, label, fontSize), fontSize, 1, 0, complementaryColor(c));
+}
+
+void drawPauseMenu(World w) {
+    drawPlaying(w, 1);
+
+    DrawTextRec(alagard, "Paused", centerText(PAUSE_MENU_LABEL, "Paused", 100), 100, 1, 0, BLACK);
+
+    Color resume = BLACK,
+          save = BLACK,
+          exit = BLACK;
+
+    if (pointInRect(PAUSE_MENU_RESUME_BUTTON, GetMousePosition())) {
+        resume = WHITE;
+    } else if (pointInRect(PAUSE_MENU_SAVE_BUTTON, GetMousePosition())) {
+        save = WHITE;
+    } else if (pointInRect(PAUSE_MENU_EXIT_BUTTON, GetMousePosition())) {
+        exit = WHITE;
+    }
+
+    drawButton("Resume", PAUSE_MENU_RESUME_BUTTON, resume, 51);
+    // HACK: Raylib doesn't like 4-length strings for some reason????
+    // Might need to fix this in the raylib code itself
+    drawButton("Save ", PAUSE_MENU_SAVE_BUTTON, save, 51);
+    drawButton("Exit", PAUSE_MENU_EXIT_BUTTON, exit, 51);
 }

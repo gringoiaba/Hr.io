@@ -10,6 +10,8 @@ void updateWorld(World *w, float deltaTime) {
     updateInput(w, deltaTime);
 
     switch (w->state) {
+    case MAIN_MENU:
+        w->player.isAlive = 0;
     case PLAYING:
         updatePlaying(w, deltaTime);
         break;
@@ -71,10 +73,7 @@ void checkCollisions(World *w) {
         if (w->player.isAlive && isInside(w->player.position, w->enemies[i].ball)) {
             killPlayer(w, &w->enemies[i], i);
         }
-
-
     }
-
 }
 
 // Checks for foods being eaten

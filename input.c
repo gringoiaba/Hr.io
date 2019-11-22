@@ -16,7 +16,12 @@ void updateInput(World* w, float delta) {
     case GAME_OVER:
         updateInputGameOver(w, delta);
         break;
-
+    case MAIN_MENU:
+        updateInputMainMenu(w, delta);
+        break;
+    case PAUSE_MENU:
+        updateInputPauseMenu(w, delta);
+        break;
     }
 }
 
@@ -44,12 +49,22 @@ void updateInputPlaying(World *w, float delta) {
     if (IsKeyDown(KEY_SPACE)) {
         w->player.radius += delta * 10;
     }
+
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        w->state = PAUSE_MENU;
+    }
 }
 
 void updateInputGameOver(World* w, float delta) {
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && pointInRect(GAME_OVER_BUTTON, GetMousePosition())){
-        *w = newWorld();
-        w->state = PLAYING;
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+
+        if (pointInRect(GAME_OVER_BUTTON, GetMousePosition())){
+            *w = newWorld();
+            w->state = PLAYING;
+
+        } else if (pointInRect(GAME_OVER_MENU_BUTTON, GetMousePosition())) {
+            w->state = MAIN_MENU;
+        }
     }
 }
 
@@ -58,4 +73,33 @@ int pointInRect(Rectangle r, Vector2 v) {
             v.x > r.x &&
             v.y < r.y + r.height &&
             v.y > r.y;
+}
+
+void updateInputMainMenu(World* w, float delta) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+
+        if (pointInRect(MAIN_MENU_START_BUTTON, GetMousePosition())){
+            *w = newWorld();
+            w->state = PLAYING;
+
+        } else if (pointInRect(MAIN_MENU_LOAD_BUTTON, GetMousePosition())) {
+            // TODO: Load
+            // *w = loadWorld();
+            w->state = PLAYING;
+
+        } else if (pointInRect(MAIN_MENU_HISCORE_BUTTON, GetMousePosition())) {
+            // TODO: Hiscore state
+            // w->state = HISCORE;
+
+        } else if (pointInRect(MAIN_MENU_EXIT_BUTTON, GetMousePosition())) {
+            isRunning = 0;
+        }
+    }
+}
+
+void updateInputPauseMenu(World* w, float delta) {
+    if (IsKeyPressed(KEY_ESCAPE)) {
+        w->state = PLAYING;
+    }
+
 }

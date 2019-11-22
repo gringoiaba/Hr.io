@@ -23,7 +23,8 @@
 typedef enum {
     PLAYING,
     GAME_OVER,
-    MAIN_MENU
+    MAIN_MENU,
+    PAUSE_MENU
 } WorldState;
 
 typedef struct {
