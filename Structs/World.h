@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Circle.h"
+#include "PlayerScore.h"
 
 #ifndef STRUCTS_WORLD_H
 #define STRUCTS_WORLD_H
@@ -36,7 +37,7 @@ typedef struct {
     float elapsedTime; // Time the world has been running
 } World;
 
-void updateWorld(World*, float);
+void updateWorld(World*, float, PlayerScore*);
 void checkFoods (World *);
 void checkCollisions (World *);
 void respawnFoods (World*);
@@ -48,6 +49,10 @@ void updatePoison(World*, float);
 void moveUnused(World*);
 void updatePlaying(World*, float);
 World newWorld();
+int loadWorld(World*);
+void saveWorld(World);
+
+
 
 
 #endif // STRUCTS_WORLD_H

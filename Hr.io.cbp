@@ -39,6 +39,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Structs/Enemy.h" />
+		<Unit filename="Structs/PlayerScore.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Structs/PlayerScore.h" />
 		<Unit filename="Structs/Vec2.c">
 			<Option compilerVar="CC" />
 		</Unit>

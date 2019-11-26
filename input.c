@@ -4,11 +4,12 @@
 #include "Structs/Vec2.h"
 #include "graphics.h"
 #include "raylib.h"
+#include "Structs/PlayerScore.h"
 #include <stdio.h>
 
 #define PLAYER_SPEED 100
 
-void updateInput(World* w, float delta) {
+void updateInput(World* w, float delta, PlayerScore *scores) {
     switch (w->state) {
     case PLAYING:
         updateInputPlaying(w, delta);
@@ -17,7 +18,7 @@ void updateInput(World* w, float delta) {
         updateInputGameOver(w, delta);
         break;
     case MAIN_MENU:
-        updateInputMainMenu(w, delta);
+        updateInputMainMenu(w, delta, scores);
         break;
     case PAUSE_MENU:
         updateInputPauseMenu(w, delta);
@@ -75,7 +76,7 @@ int pointInRect(Rectangle r, Vector2 v) {
             v.y > r.y;
 }
 
-void updateInputMainMenu(World* w, float delta) {
+void updateInputMainMenu(World* w, float delta, PlayerScore* scores) {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 
         if (pointInRect(MAIN_MENU_START_BUTTON, GetMousePosition())){
@@ -83,13 +84,13 @@ void updateInputMainMenu(World* w, float delta) {
             w->state = PLAYING;
 
         } else if (pointInRect(MAIN_MENU_LOAD_BUTTON, GetMousePosition())) {
-            // TODO: Load
-            // *w = loadWorld();
-            w->state = PLAYING;
+            if (loadWorld(w)) {
+               w->state = PLAYING;
+            }
 
         } else if (pointInRect(MAIN_MENU_HISCORE_BUTTON, GetMousePosition())) {
-            // TODO: Hiscore state
-            // w->state = HISCORE;
+            insertScore(scores, (PlayerScore){"Player", 20}, 0);
+            printScores(scores);
 
         } else if (pointInRect(MAIN_MENU_EXIT_BUTTON, GetMousePosition())) {
             isRunning = 0;
@@ -101,5 +102,15 @@ void updateInputPauseMenu(World* w, float delta) {
     if (IsKeyPressed(KEY_ESCAPE)) {
         w->state = PLAYING;
     }
-
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        if (pointInRect(PAUSE_MENU_RESUME_BUTTON, GetMousePosition())) {
+            w->state = PLAYING;
+        }
+        if (pointInRect(PAUSE_MENU_SAVE_BUTTON, GetMousePosition())) {
+            saveWorld(*w);
+        }
+        if (pointInRect(PAUSE_MENU_EXIT_BUTTON, GetMousePosition())) {
+            w->state = MAIN_MENU;
+        }
+    }
 }

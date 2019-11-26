@@ -1,13 +1,13 @@
-#include "World.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
 #include "World.h"
+#include "PlayerScore.h"
 #include "../input.h"
 
-void updateWorld(World *w, float deltaTime) {
-    updateInput(w, deltaTime);
+void updateWorld(World *w, float deltaTime, PlayerScore *scores) {
+    updateInput(w, deltaTime, scores);
 
     switch (w->state) {
     case MAIN_MENU:
@@ -238,4 +238,21 @@ World newWorld() {
     };
 
     return w;
+}
+
+
+void saveWorld(World w) {
+    FILE *f;
+    f = fopen("save","wb");
+    fwrite(&w, sizeof(World), 1, f);
+}
+
+int loadWorld(World *w) {
+    FILE *f;
+    f = fopen("save", "rb");
+    if (f != NULL) {
+        fread(w, sizeof(World), 1, f);
+        return 1;
+    }
+    return 0;
 }
