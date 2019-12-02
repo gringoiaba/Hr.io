@@ -196,7 +196,7 @@ Rectangle centerText(Rectangle rec, char* txt, int size) {
     Rectangle res = {
         .x = rec.x + rec.width/2 - len.x/2,
         .y = rec.y,
-        .width = len.x,
+        .width = len.x + 5, // A little extra for the last character
         .height = len.y
     };
 
@@ -291,5 +291,44 @@ void drawAskName(World w) {
 }
 
 void drawHighScoreScreen(World w) {
-    // TODO
+    int i;
+
+    DrawTextRec(
+        alagard,
+        "Highest scores of Hr.io:",
+        centerText(HIGH_SCORE_LABEL, "Highest scores of Hr.io:", 32),
+        32,
+        1,
+        0,
+        BLACK
+    );
+
+    Color c = LIGHTGRAY;
+    for (i = 0; i < HIGHSCORE_SIZE; i++) {
+        if (scores[i].score <= 0) {
+            break;
+        }
+
+        Rectangle rec;
+        rec.x = SCREEN_WIDTH / 2 - 500 / 2;
+        rec.y = HIGH_SCORE_LABEL.y + (i+1) * 50;
+        rec.height = 45;
+        rec.width = 500;
+
+        DrawRectangleRec(rec, c);
+
+        char* txt = FormatText("%s: %g", scores[i].name, scores[i].score);
+
+        DrawTextRec(
+            alagard,
+            txt,
+            centerText(rec, txt, 32),
+            32,
+            1,
+            0,
+            complementaryColor(c)
+        );
+
+        c = complementaryColor(c);
+    }
 }

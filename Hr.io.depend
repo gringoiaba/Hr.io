@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1575294739 source:x:\hr.io\graphics.c
+1575296751 source:x:\hr.io\graphics.c
 	"graphics.h"
 	"raylib.h"
 	"Structs/Vec2.h"
@@ -9,7 +9,7 @@
 	"input.h"
 	<stdio.h>
 
-1575294775 x:\hr.io\graphics.h
+1575295911 x:\hr.io\graphics.h
 	"Structs/World.h"
 	"Structs/Vec2.h"
 	"raylib.h"
@@ -49,7 +49,7 @@
 	"Structs/PlayerScore.h"
 	<stdio.h>
 
-1575294024 source:x:\hr.io\main.c
+1575296602 source:x:\hr.io\main.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>

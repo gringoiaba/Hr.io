@@ -17,8 +17,6 @@ int main(void) {
 
     World w = newWorld();
 
-    scores[0].score = 1;
-
     initGraphics();
 
     while (isGraphicsRunning()) {
