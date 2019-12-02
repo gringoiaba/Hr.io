@@ -14,5 +14,7 @@ typedef struct {
 PlayerScore scores[HIGHSCORE_SIZE];
 
 void insertScore(PlayerScore, int);
+void loadScore();
+void saveScore();
 
 #endif // STRUCTS_PLAYER_H

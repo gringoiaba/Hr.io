@@ -332,3 +332,7 @@ void drawHighScoreScreen(World w) {
         c = complementaryColor(c);
     }
 }
+
+void drawLabel(World w) {
+
+}

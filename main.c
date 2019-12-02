@@ -17,6 +17,7 @@ int main(void) {
 
     World w = newWorld();
 
+    loadScore();
     initGraphics();
 
     while (isGraphicsRunning()) {
@@ -24,7 +25,7 @@ int main(void) {
         updateWorld(&w, 1/(float)60);
         drawWorld(w);
     }
-
+    saveScore();
     endGraphics();
 
     return 0;
