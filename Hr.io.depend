@@ -1,30 +1,31 @@
 # depslib dependency file v1.0
-1574435578 source:x:\hr.io\graphics.c
+1575294739 source:x:\hr.io\graphics.c
 	"graphics.h"
 	"raylib.h"
 	"Structs/Vec2.h"
 	"Structs/Circle.h"
 	"Structs/World.h"
 	"Structs/Enemy.h"
-	<stdio.h>
 	"input.h"
+	<stdio.h>
 
-1574434672 x:\hr.io\graphics.h
+1575294775 x:\hr.io\graphics.h
 	"Structs/World.h"
 	"Structs/Vec2.h"
 	"raylib.h"
 
-1574780587 x:\hr.io\structs\world.h
+1575293899 x:\hr.io\structs\world.h
 	"Enemy.h"
 	"Circle.h"
 	"PlayerScore.h"
 
-1573739835 x:\hr.io\structs\enemy.h
+1575289149 x:\hr.io\structs\enemy.h
 	"Circle.h"
 	"World.h"
 
-1573738823 x:\hr.io\structs\circle.h
+1575288223 x:\hr.io\structs\circle.h
 	"Vec2.h"
+	"PlayerScore.h"
 
 1573738023 x:\hr.io\structs\vec2.h
 
@@ -32,13 +33,13 @@
 	<stdarg.h>
 	<stdbool.h>
 
-1574780587 x:\hr.io\input.h
+1575293712 x:\hr.io\input.h
 	"Structs/World.h"
 	"Structs/Vec2.h"
 	"Structs/PlayerScore.h"
 	"raylib.h"
 
-1574781127 source:x:\hr.io\input.c
+1575294055 source:x:\hr.io\input.c
 	"input.h"
 	"Structs/World.h"
 	"Structs/Circle.h"
@@ -48,11 +49,12 @@
 	"Structs/PlayerScore.h"
 	<stdio.h>
 
-1574781004 source:x:\hr.io\main.c
+1575294024 source:x:\hr.io\main.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	<time.h>
+	<string.h>
 	"Structs/Enemy.h"
 	"Structs/Circle.h"
 	"Structs/Vec2.h"
@@ -66,7 +68,7 @@
 	"Vec2.h"
 	"Circle.h"
 
-1573740474 source:x:\hr.io\structs\enemy.c
+1575293496 source:x:\hr.io\structs\enemy.c
 	"Circle.h"
 	"Enemy.h"
 	"World.h"
@@ -80,16 +82,17 @@
 	<stdlib.h>
 	"Vec2.h"
 
-1574780921 source:x:\hr.io\structs\world.c
+1575294168 source:x:\hr.io\structs\world.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
+	<string.h>
 	"World.h"
 	"PlayerScore.h"
 	"../input.h"
 
-1574780640 x:\hr.io\structs\playerscore.h
+1575293700 x:\hr.io\structs\playerscore.h
 
-1574781158 source:x:\hr.io\structs\playerscore.c
+1575293834 source:x:\hr.io\structs\playerscore.c
 	"PlayerScore.h"
 

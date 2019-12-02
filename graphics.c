@@ -4,8 +4,8 @@
 #include "Structs/Circle.h"
 #include "Structs/World.h"
 #include "Structs/Enemy.h"
-#include <stdio.h>
 #include "input.h"
+#include <stdio.h>
 
 #define newVector2(x, y) ((Vector2) {x, y})
 
@@ -45,6 +45,12 @@ void drawWorld(World w) {
     case PAUSE_MENU:
         drawPauseMenu(w);
         break;
+    case ASK_NAME:
+        drawAskName(w);
+        break;
+    case HIGH_SCORE_SCREEN:
+        drawHighScoreScreen(w);
+        break;
     }
 
     DrawFPS(0, 0);
@@ -75,7 +81,7 @@ void drawPlaying(World w, int showScore) {
                     c = GetColor((ColorToInt(GREEN) + ColorToInt(c)) / 2);
                 }
 
-                drawCircle(w.player, c);
+                drawCircle(w.player, c, w.player.name);
             }
 
             for (i = 0; i < NUM_ENEMIES; i++) {
@@ -101,13 +107,13 @@ void drawPlaying(World w, int showScore) {
                         c = GetColor((ColorToInt(GREEN) + ColorToInt(c)) / 2);
                     }
 
-                    drawCircle(w.enemies[i].ball, c);
+                    drawCircle(w.enemies[i].ball, c, w.enemies[i].ball.name);
                 }
             }
 
             for (i = 0; i < NUM_FOOD; i++) {
                 if (w.foods[i].isAlive) {
-                    drawCircle(w.foods[i], YELLOW);
+                    drawCircle(w.foods[i], YELLOW, "");
                 }
             }
 
@@ -150,8 +156,20 @@ void drawGameOver(World w) {
 }
 
 
-void drawCircle(Ball b, Color c) {
+void drawCircle(Ball b, Color c, char* name) {
     DrawCircle(b.position.x, b.position.y, b.radius, c);
+
+    Rectangle textPos = centerText(
+        (Rectangle){
+            b.position.x - b.radius,
+            b.position.y,
+            b.radius * 2,
+            b.radius * 2
+        },
+        name,
+        b.radius / 1.5f
+    );
+    DrawTextRec(alagard, name, textPos, b.radius / 1.5f, 1, 1, complementaryColor(c));
 }
 
 void endGraphics() {
@@ -252,4 +270,26 @@ void drawPauseMenu(World w) {
     // Might need to fix this in the raylib code itself
     drawButton("Save ", PAUSE_MENU_SAVE_BUTTON, save, 51);
     drawButton("Exit", PAUSE_MENU_EXIT_BUTTON, exit, 51);
+}
+
+void drawAskName(World w) {
+    Color c = LIGHTGRAY;
+    Color buttonColor = RAYWHITE;
+
+    if (pointInRect(ASK_NAME_CONFIRM_BUTTON, GetMousePosition())) {
+        buttonColor = BLACK;
+    }
+
+    DrawTextRec(alagard, "What's your name?", centerText(ASK_NAME_LABEL, "What's your name?", 52), 52, 1, 1, complementaryColor(c));
+
+    DrawRectangleRec(ASK_NAME_INPUT_BOX, c);
+    DrawRectangleLinesEx(ASK_NAME_INPUT_BOX, 4, complementaryColor(c));
+
+    DrawTextEx(alagard, w.player.name, (Vector2){ ASK_NAME_INPUT_BOX.x + 4, ASK_NAME_INPUT_BOX.y }, 48, 1, complementaryColor(c));
+
+    drawButton("Confirm ", ASK_NAME_CONFIRM_BUTTON, complementaryColor(buttonColor), 48);
+}
+
+void drawHighScoreScreen(World w) {
+    // TODO
 }

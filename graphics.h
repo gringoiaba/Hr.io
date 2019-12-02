@@ -73,6 +73,26 @@
                                                .width = 300,                        \
                                                .height = 50})
 
+#define ASK_NAME_LABEL ((Rectangle) {    .x = SCREEN_WIDTH/2 - 1000/2,         \
+                                         .y = 100,                             \
+                                         .width = 1000,                        \
+                                         .height = 50})
+
+#define ASK_NAME_INPUT_BOX ((Rectangle) {.x = SCREEN_WIDTH/2 - 300/2,         \
+                                         .y = ASK_NAME_LABEL.y + 100,         \
+                                         .width = 300,                        \
+                                         .height = 50})
+
+#define ASK_NAME_CONFIRM_BUTTON ((Rectangle) {.x = SCREEN_WIDTH/2 - 300/2,         \
+                                              .y = ASK_NAME_INPUT_BOX.y + 100,     \
+                                              .width = 300,                        \
+                                              .height = 50})
+
+#define HIGH_SCORE_SOMETHING ((Rectangle) {    .x = SCREEN_WIDTH/2 - 200/2,         \
+                                         .y = 100,                            \
+                                         .width = 1000,                       \
+                                         .height = 50})
+
 Camera2D cam;
 int isRunning;
 
@@ -81,7 +101,7 @@ void drawWorld(World);
 void endGraphics();
 int isGraphicsRunning();
 Vector2 vec2ToVector2(Vec2);
-void drawCircle(Ball, Color);
+void drawCircle(Ball, Color, char*);
 void drawPlaying(World, int);
 void drawGameOver(World);
 Rectangle centerText(Rectangle, char*, int);
@@ -89,5 +109,6 @@ Color complementaryColor(Color);
 void drawMainMenu(World);
 void drawButton(char*, Rectangle, Color, int);
 void drawPauseMenu(World);
+void drawAskName(World);
 
 #endif // GRAPHICS_H

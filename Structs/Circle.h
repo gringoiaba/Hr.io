@@ -2,11 +2,13 @@
 #define STRUCTS_CIRCLE_H
 
 #include "Vec2.h"
+#include "PlayerScore.h"
 
 typedef struct {
     Vec2 position;
     int isAlive;
     float radius;
+    char name[NAME_SIZE];
 
     float poisonTimeRemaining;
 } Ball;

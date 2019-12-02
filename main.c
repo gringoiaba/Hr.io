@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <string.h>
 
 #include "Structs/Enemy.h"
 #include "Structs/Circle.h"
@@ -16,15 +17,13 @@ int main(void) {
 
     World w = newWorld();
 
-    PlayerScore scores[HIGHSCORE_SIZE] = {0};
-
-    w.state = MAIN_MENU;
+    scores[0].score = 1;
 
     initGraphics();
 
     while (isGraphicsRunning()) {
 
-        updateWorld(&w, 1/(float)60, scores);
+        updateWorld(&w, 1/(float)60);
         drawWorld(w);
     }
 

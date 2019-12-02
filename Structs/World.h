@@ -25,7 +25,9 @@ typedef enum {
     PLAYING,
     GAME_OVER,
     MAIN_MENU,
-    PAUSE_MENU
+    PAUSE_MENU,
+    ASK_NAME,
+    HIGH_SCORE_SCREEN
 } WorldState;
 
 typedef struct {
@@ -37,7 +39,7 @@ typedef struct {
     float elapsedTime; // Time the world has been running
 } World;
 
-void updateWorld(World*, float, PlayerScore*);
+void updateWorld(World*, float);
 void checkFoods (World *);
 void checkCollisions (World *);
 void respawnFoods (World*);

@@ -3,11 +3,16 @@
 
 #define HIGHSCORE_SIZE 10
 
+#define NAME_SIZE (50 + 1)
 
 typedef struct {
-    char name[51];
+    char name[NAME_SIZE];
     float score;
 } PlayerScore;
 
+// Global highscore tracker
+PlayerScore scores[HIGHSCORE_SIZE];
+
+void insertScore(PlayerScore, int);
 
 #endif // STRUCTS_PLAYER_H

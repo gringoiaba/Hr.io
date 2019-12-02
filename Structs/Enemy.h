@@ -38,5 +38,6 @@ float randomRadian();
 void killEnemy(World*, Ball*, int, Enemy*, int);
 void explodeEnemy(World*, Enemy*, int);
 void poisonKiller(Ball*);
+char* randomName();
 
 #endif

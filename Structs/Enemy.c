@@ -148,3 +148,42 @@ void explodeEnemy(World* w, Enemy* e, int index) {
 void poisonKiller(Ball* killer) {
     killer->poisonTimeRemaining += POISON_TIME;
 }
+
+char* randomName() {
+    char* names[] = {
+        "Ferrari ",
+        "Raider ",
+        "JoseStar ",
+        "Laggy ",
+        "Garp ",
+        "RAPTOR ",
+        "hdabjh ",
+        "Equipo Novato ",
+        "Lukas Dark ",
+        "Equipo Meteoro ",
+        "angel ",
+        "Frostblink ",
+        "Smash YT",
+        "Amigo Proo",
+        "An unnamed cell",
+        "Abril ",
+        "Percival ",
+        "Sarinela ",
+        "tonello ",
+        "cuky ",
+        "LOL ",
+        "APOLO ",
+        "MARINAA ",
+        "Ariel ",
+        "VIP Neymar ",
+        "YT: Kevinkf2 ",
+        "Vou Sair ",
+        "doge ",
+        "cavera ",
+        "kiriko ",
+        "santos ",
+        "kolibre "
+    };
+
+    return names[rand() % 32];
+}

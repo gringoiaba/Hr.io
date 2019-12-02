@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 #include "World.h"
 #include "PlayerScore.h"
 #include "../input.h"
 
-void updateWorld(World *w, float deltaTime, PlayerScore *scores) {
-    updateInput(w, deltaTime, scores);
+void updateWorld(World *w, float deltaTime) {
+    updateInput(w, deltaTime);
 
     switch (w->state) {
     case MAIN_MENU:
@@ -160,6 +161,7 @@ void respawnEnemies(World *w) {
             w->enemies[i].elementalType = rand()%3;
             w->enemies[i].ball.radius = BASE_RADIUS;
             w->enemies[i].ball.poisonTimeRemaining = 0;
+            strcpy(w->enemies[i].ball.name, randomName());
         }
     }
 }
@@ -174,6 +176,12 @@ void updateEnemies(World *w, float delta) {
 void killPlayer(World* w, Enemy* killer, int index) {
     w->player.isAlive = 0;
     killer->ball.radius = newRadius(killer->ball, w->player);
+
+    PlayerScore score;
+    strcpy(score.name, w->player.name);
+    score.score = w->elapsedTime;
+
+    insertScore(score, 0);
 
     w->state = GAME_OVER;
 }
@@ -229,12 +237,13 @@ World newWorld() {
         .position = { 0, 0 },
         .isAlive = 1,
         .radius = BASE_RADIUS,
-        .poisonTimeRemaining = 0
+        .poisonTimeRemaining = 0,
+        .name = {0}
     };
 
     World w = {
         .player = b,
-        .state = GAME_OVER,
+        .state = MAIN_MENU,
     };
 
     return w;

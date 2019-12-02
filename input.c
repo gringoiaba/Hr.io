@@ -9,7 +9,7 @@
 
 #define PLAYER_SPEED 100
 
-void updateInput(World* w, float delta, PlayerScore *scores) {
+void updateInput(World* w, float delta) {
     switch (w->state) {
     case PLAYING:
         updateInputPlaying(w, delta);
@@ -18,10 +18,13 @@ void updateInput(World* w, float delta, PlayerScore *scores) {
         updateInputGameOver(w, delta);
         break;
     case MAIN_MENU:
-        updateInputMainMenu(w, delta, scores);
+        updateInputMainMenu(w, delta);
         break;
     case PAUSE_MENU:
         updateInputPauseMenu(w, delta);
+        break;
+    case ASK_NAME:
+        updateAskName(w, delta);
         break;
     }
 }
@@ -76,12 +79,12 @@ int pointInRect(Rectangle r, Vector2 v) {
             v.y > r.y;
 }
 
-void updateInputMainMenu(World* w, float delta, PlayerScore* scores) {
+void updateInputMainMenu(World* w, float delta) {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 
         if (pointInRect(MAIN_MENU_START_BUTTON, GetMousePosition())){
             *w = newWorld();
-            w->state = PLAYING;
+            w->state = ASK_NAME;
 
         } else if (pointInRect(MAIN_MENU_LOAD_BUTTON, GetMousePosition())) {
             if (loadWorld(w)) {
@@ -89,8 +92,7 @@ void updateInputMainMenu(World* w, float delta, PlayerScore* scores) {
             }
 
         } else if (pointInRect(MAIN_MENU_HISCORE_BUTTON, GetMousePosition())) {
-            insertScore(scores, (PlayerScore){"Player", 20}, 0);
-            printScores(scores);
+            w->state = HIGH_SCORE_SCREEN;
 
         } else if (pointInRect(MAIN_MENU_EXIT_BUTTON, GetMousePosition())) {
             isRunning = 0;
@@ -111,6 +113,36 @@ void updateInputPauseMenu(World* w, float delta) {
         }
         if (pointInRect(PAUSE_MENU_EXIT_BUTTON, GetMousePosition())) {
             w->state = MAIN_MENU;
+        }
+    }
+}
+
+void updateAskName(World* w, float delta) {
+
+    int key = GetKeyPressed();
+
+    char tmp[2] = {0};
+
+    if (key > 0) {
+        // If the key is a letter...
+        if (key >= 'A' && key <= 'z') {
+            tmp[0] = (char)key;
+            strcat(w->player.name, tmp);
+        }
+    }
+
+    if (IsKeyPressed(KEY_BACKSPACE)) {
+        int index = strlen(w->player.name) - 1;
+
+        if (index >= 0) {
+            w->player.name[index] = '\0';
+        }
+    }
+
+    if (pointInRect(ASK_NAME_CONFIRM_BUTTON, GetMousePosition())) {
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && strlen(w->player.name) > 0) {
+            strcat(w->player.name, " ");
+            w->state = PLAYING;
         }
     }
 }
