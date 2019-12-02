@@ -293,3 +293,7 @@ void drawAskName(World w) {
 void drawHighScoreScreen(World w) {
     // TODO
 }
+
+void drawLabel(World w) {
+
+}
