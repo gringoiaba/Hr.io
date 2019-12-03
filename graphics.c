@@ -218,6 +218,8 @@ void drawMainMenu(World w) {
 
     DrawTextRec(alagard, "H r . i o", centerText(MAIN_MENU_TITLE_LABEL, "H r . i o", 100), 100, 1, 0, BLACK);
 
+    drawLabel(w);
+
     Color start = BLACK,
           load = BLACK,
           hiscore = BLACK,
@@ -294,6 +296,18 @@ void drawHighScoreScreen(World w) {
     // TODO
 }
 
-void drawLabel(World w) {
+void drawLabel (World w) {
+    // Draw Poisonous label
+    DrawRectangle(25, 450, 30, 30, GREEN);
+    DrawText("Poisonous ", 60, 455, 24, BLACK);
+
+    // Draw Explosive label
+    DrawRectangle(25, 500, 30, 30, ORANGE);
+    DrawText("Explosive ", 60, 505, 24, BLACK);
+
+
+    //Draw Normal label
+    DrawRectangle(25, 550, 30, 30, RED);
+    DrawText("Normal ", 60, 555, 24, BLACK);
 
 }
