@@ -5,7 +5,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-#define ENEMY_SPEED 100
 #define SWITCH_TIME 1
 
 #define EXPLOSION_SCALE 1.5
@@ -14,33 +13,6 @@
 
 #define POISON_TIME 5
 
-char* enemyMoveTypeToString(EnemyMoveType t) {
-    switch (t) {
-    case STATIC:
-        return "Static";
-    case RANDOM:
-        return "Random";
-    case DIRECTED:
-        return "Directed";
-    case CHASER:
-        return "Chaser";
-    default:
-        return "Undefined";
-    }
-}
-
-char* enemyElementalTypeToString(EnemyElementalType t) {
-    switch (t) {
-    case NONE:
-        return "None";
-    case EXPLOSIVE:
-        return "Explosive";
-    case POISONOUS:
-        return "Poisonous";
-    default:
-        return "Undefined";
-    }
-}
 
 void updateEnemy (Enemy *self, World w, int index, float delta) {
 
@@ -68,7 +40,7 @@ void moveChaser (Enemy *self, World w, int index, float delta) {
 
     float angleToPlayer = angleBetween (self->ball.position, w.player.position);
 
-    Vec2 movement = getMovementByAngle(angleToPlayer, ENEMY_SPEED);
+    Vec2 movement = getMovementByAngle(angleToPlayer, getCircleSpeed(self->ball));
     movement = scaleVec2(movement, delta);
 
     moveCircle(&self->ball, movement);
@@ -76,7 +48,7 @@ void moveChaser (Enemy *self, World w, int index, float delta) {
 
 
 void moveDirected (Enemy *self, World w, int index, float delta) {
-    Vec2 movement = getMovementByAngle(self->movingDirection, ENEMY_SPEED);
+    Vec2 movement = getMovementByAngle(self->movingDirection, getCircleSpeed(self->ball));
     movement = scaleVec2(movement, delta);
 
     moveCircle(&self->ball, movement);

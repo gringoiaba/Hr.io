@@ -107,29 +107,6 @@ void checkFoods (World *w) {
 
 }
 
-void printWorld(World w) {
-    int i;
-
-    printf("player: ");
-    printBall(w.player);
-
-    printf("\n");
-    for (i = 0; i < NUM_ENEMIES; i++) {
-        if (w.enemies[i].ball.isAlive) {
-            printBall(w.enemies[i].ball);
-            printf("\n  MoveType: %s ", enemyMoveTypeToString(w.enemies[i].moveType));
-            printf("\n  ElementalType: %s", enemyElementalTypeToString(w.enemies[i].elementalType));
-            printf("\n");
-        }
-    }
-    for (i = 0; i < NUM_FOOD; i++) {
-        if (w.foods[i].isAlive) {
-            printBall(w.foods[i]);
-            printf("\n");
-        }
-    }
-}
-
 void respawnFoods(World *w) {
     int i;
     for (i = 0; i < NUM_FOOD; i++) {
@@ -159,7 +136,7 @@ void respawnEnemies(World *w) {
             w->enemies[i].movingDirection = randomRadian();
             w->enemies[i].timeEllapsedSinceLastSwitch = 0;
             w->enemies[i].elementalType = rand()%3;
-            w->enemies[i].ball.radius = BASE_RADIUS;
+            w->enemies[i].ball.radius = rand()%40 + BASE_RADIUS;
             w->enemies[i].ball.poisonTimeRemaining = 0;
             strcpy(w->enemies[i].ball.name, randomName());
         }
@@ -236,7 +213,7 @@ World newWorld() {
     Ball b = {
         .position = { 0, 0 },
         .isAlive = 1,
-        .radius = BASE_RADIUS,
+        .radius = BASE_RADIUS * 1.5,
         .poisonTimeRemaining = 0,
         .name = {0}
     };

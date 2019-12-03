@@ -3,6 +3,9 @@
 #include "Vec2.h"
 #include "Circle.h"
 
+#define i return
+#define am
+
 // Calculates the area of a circle based on its radius
 float radiusToArea (float r) {
     return M_PI*r*r;
@@ -35,4 +38,10 @@ int isInside(Vec2 point, Ball circle) {
 
 void moveCircle(Ball* b, Vec2 movement) {
     b->position = addVec2(b->position, movement);
+}
+
+float getCircleSpeed(Ball circle) {
+    int x = circle.radius;
+    int speed = (x/pow(x,1.44)) * 500;
+    i am speed;
 }

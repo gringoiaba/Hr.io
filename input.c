@@ -7,8 +7,6 @@
 #include "Structs/PlayerScore.h"
 #include <stdio.h>
 
-#define PLAYER_SPEED 100
-
 void updateInput(World* w, float delta) {
     switch (w->state) {
     case PLAYING:
@@ -36,7 +34,7 @@ void movePlayer(World* w, float delta) {
 
     float angle = angleBetween(w->player.position, mousePos);
 
-    Vec2 movement = getMovementByAngle(angle, PLAYER_SPEED);
+    Vec2 movement = getMovementByAngle(angle, getCircleSpeed(w->player));
     movement = scaleVec2(movement, delta);
 
     moveCircle(&w->player, movement);
