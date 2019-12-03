@@ -3,6 +3,7 @@
 
 #include "Circle.h"
 
+// Enumeration for possible moving types
 typedef enum {
     STATIC,
     RANDOM,
@@ -10,17 +11,19 @@ typedef enum {
     DIRECTED
 } EnemyMoveType;
 
+// Enumeration for possible enemy types
 typedef enum {
     NONE,
     EXPLOSIVE,
     POISONOUS
 } EnemyElementalType;
 
+// Struct of an enemy
 typedef struct {
-    Ball ball;
+    Ball ball; // An enemy is a ball structure
 
-    EnemyMoveType moveType;
-    EnemyElementalType elementalType;
+    EnemyMoveType moveType; // An enemy is composed by a type of movement
+    EnemyElementalType elementalType; // And composed by a elemental type
 
     float timeEllapsedSinceLastSwitch; // Time in seconds elapsed since the last direction switch
     float movingDirection; // Angle in radians which the AI uses to move

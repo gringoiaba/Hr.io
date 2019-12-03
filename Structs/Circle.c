@@ -24,11 +24,6 @@ float newRadius (Ball a, Ball b) {
     );
 }
 
-void printBall(Ball b) {
-    printVec2(b.position);
-    printf(", isAlive: %d, radius: %g", b.isAlive, b.radius);
-}
-
 // Tells if a Vec2 is inside a circle
 int isInside(Vec2 point, Ball circle) {
     float dist = distance(point, circle.position);
@@ -40,8 +35,9 @@ void moveCircle(Ball* b, Vec2 movement) {
     b->position = addVec2(b->position, movement);
 }
 
+// Calculates the circle's speed based on its radius
 float getCircleSpeed(Ball circle) {
     int x = circle.radius;
-    int speed = (x/pow(x,1.44)) * 500;
+    int speed = (x/pow(x,1.44)) * 500; // Formula that calculates the speed
     i am speed;
 }

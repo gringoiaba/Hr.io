@@ -11,17 +11,19 @@
 
 Font alagard;
 
+
+// Initiates the main graphics of the game
 void initGraphics() {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hr.io");
-    SetTargetFPS(60);
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Hr.io"); // Sets the parameters of the game window
+    SetTargetFPS(60); // Game fps
 
     isRunning = 1;
 
-    alagard = LoadFont("res/alagard.png");
+    alagard = LoadFont("res/alagard.png"); // Text font used
 
-    cam = (Camera2D) { 0 };
-    cam.offset = (Vector2) { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
-    cam.zoom = 1.0f;
+    cam = (Camera2D) { 0 };  // Creates the camera
+    cam.offset = (Vector2) { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f }; // Changes the center of the camera
+    cam.zoom = 1.0f; // Camera zoom
 
     SetExitKey(0);
 }
@@ -30,8 +32,9 @@ void drawWorld(World w) {
 
     BeginDrawing();
 
-    ClearBackground(BLACK);
+    ClearBackground(BLACK); // Set the background color
 
+    // Run the program according to the game state
     switch (w.state) {
     case PLAYING:
         drawPlaying(w, 1);
@@ -53,22 +56,23 @@ void drawWorld(World w) {
         break;
     }
 
-    DrawFPS(0, 0);
+    DrawFPS(0, 30);
 
     EndDrawing();
 }
 
+// Draws the graphics of a playing game
 void drawPlaying(World w, int showScore) {
     int i;
 
-    cam.target = vec2ToVector2(w.player.position);
-    cam.zoom = 1 + 2/w.player.radius;
+    cam.target = vec2ToVector2(w.player.position); // Sets the target of the camera to the player position
+    cam.zoom = 1 + 2/w.player.radius;  // Sets the camera zoom
 
         BeginMode2D(cam);
 
 
-            if (w.player.isAlive) {
-                Color c = VIOLET;
+            if (w.player.isAlive) { // If the player is alive...
+                Color c = VIOLET; // Sets the player color to violet
 
 
                 // Make poisoned balls flicker
@@ -79,21 +83,22 @@ void drawPlaying(World w, int showScore) {
                     c = GetColor((ColorToInt(GREEN) + ColorToInt(c)) / 2);
                 }
 
-                drawCircle(w.player, c, w.player.name);
+                drawCircle(w.player, c, w.player.name); // Draws the player
             }
 
+            // Loop through the enemies and draws them
             for (i = 0; i < NUM_ENEMIES; i++) {
                 if (w.enemies[i].ball.isAlive) {
                     Color c;
 
                     switch (w.enemies[i].elementalType) {
-                    case EXPLOSIVE:
+                    case EXPLOSIVE: // The explosive type color is orange
                         c = ORANGE;
                         break;
-                    case POISONOUS:
+                    case POISONOUS: // The poisonous type is green
                         c = GREEN;
                         break;
-                    case NONE:
+                    case NONE:  // The normal type is red
                         c = RED;
                         break;
                     }
@@ -109,6 +114,7 @@ void drawPlaying(World w, int showScore) {
                 }
             }
 
+            // Draws the food
             for (i = 0; i < NUM_FOOD; i++) {
                 if (w.foods[i].isAlive) {
                     drawCircle(w.foods[i], YELLOW, "");
@@ -117,29 +123,34 @@ void drawPlaying(World w, int showScore) {
 
         EndMode2D();
 
+    // Draws the player score
     if (showScore) {
         char mensagem[51];
         sprintf(mensagem, "Score: %.1f", w.elapsedTime);
 
-        DrawText(mensagem, 0, 0, 52, BLACK);
+        DrawTextEx(alagard, mensagem, (Vector2){0, 0}, 36, 1, WHITE);
     }
 }
 
+// Draws the game state of game over
 void drawGameOver(World w) {
-    drawPlaying(w, 0);
+    drawPlaying(w, 0); // Draws the game in the background
 
     // Make the world a bit darker
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(DARKGRAY, 0.3));
 
+    // Prints the final score
     char totalPoints[51];
     sprintf(totalPoints, "Your total score was %.1f", w.elapsedTime);
 
+    // Draws the labels
     DrawTextRec(alagard, "Game Over", centerText(GAME_OVER_LABEL, "Game Over", 56), 56, 1, 0, WHITE);
     DrawTextRec(alagard, totalPoints, centerText(GAME_OVER_SCORE_LABEL, totalPoints, 42), 42, 1, 0, WHITE);
 
     Color restart = WHITE,
           menu = WHITE;
 
+    // Makes the labels more interactive
     if (pointInRect(GAME_OVER_BUTTON, GetMousePosition())) {
         restart = BLACK;
     } else if (pointInRect(GAME_OVER_MENU_BUTTON, GetMousePosition())) {
@@ -153,9 +164,9 @@ void drawGameOver(World w) {
     drawButton("Main Menu", GAME_OVER_MENU_BUTTON, menu, 51);
 }
 
-
+// Function that draws a circle and a circle's name
 void drawCircle(Ball b, Color c, char* name) {
-    DrawCircle(b.position.x, b.position.y, b.radius, c);
+    DrawCircle(b.position.x, b.position.y, b.radius, c); // Draws the circle at its position
 
     Rectangle textPos = centerText(
         (Rectangle){
@@ -167,18 +178,23 @@ void drawCircle(Ball b, Color c, char* name) {
         name,
         b.radius / 1.5f
     );
+
+    // Draws the name in the center of the circle
     DrawTextRec(alagard, name, textPos, b.radius / 1.5f, 1, 1, complementaryColor(c));
 }
 
+// Ends the graphics
 void endGraphics() {
     UnloadFont(alagard);
     CloseWindow();
 }
 
+
 int isGraphicsRunning() {
-    return isRunning;
+    return isRunning && !WindowShouldClose();
 }
 
+// Function that returns a Vector2 (vector of the raylib library) to a Vec2 (created by the game developers)
 Vector2 vec2ToVector2(Vec2 v) {
     Vector2 res;
 
@@ -188,9 +204,11 @@ Vector2 vec2ToVector2(Vec2 v) {
     return res;
 }
 
+// Function that receives a rectangle and a string and returns a new rectangle to center the string
 Rectangle centerText(Rectangle rec, char* txt, int size) {
     Vector2 len = MeasureTextEx(alagard, txt, size, 1);
 
+    // Creates the rectangle in with the text will be centered
     Rectangle res = {
         .x = rec.x + rec.width/2 - len.x/2,
         .y = rec.y,
@@ -201,6 +219,7 @@ Rectangle centerText(Rectangle rec, char* txt, int size) {
     return res;
 }
 
+// Function that receives a color and returns its complementary color
 Color complementaryColor(Color c) {
     return (Color) {
         .r = ~c.r,
@@ -210,19 +229,22 @@ Color complementaryColor(Color c) {
     };
 }
 
+// Draws the main menu
 void drawMainMenu(World w) {
 
-    drawPlaying(w, 0);
+    drawPlaying(w, 0); // Makes the background as a playing game for aesthetics
 
-    DrawTextRec(alagard, "H r . i o", centerText(MAIN_MENU_TITLE_LABEL, "H r . i o", 100), 100, 1, 0, WHITE);
+    DrawTextRec(alagard, "H r . i o", centerText(MAIN_MENU_TITLE_LABEL, "H r . i o", 100), 100, 1, 0, WHITE); // Draws the game title
 
-    drawLabel(w);
+    drawLabel(w); // Draws the enemy labels
 
+    // Sets the main menu button colors
     Color start = WHITE,
           load = WHITE,
           hiscore = WHITE,
           exit = WHITE;
 
+    // Makes the buttons change color when the mouse is on it
     if (pointInRect(MAIN_MENU_START_BUTTON, GetMousePosition())) {
         start = BLACK;
     } else if (pointInRect(MAIN_MENU_LOAD_BUTTON, GetMousePosition())) {
@@ -233,30 +255,33 @@ void drawMainMenu(World w) {
           exit = RED;
     }
 
+    // Draws all the buttons in the main menu
     drawButton("Start", MAIN_MENU_START_BUTTON, start, 51);
-
-    // HACK: Raylib doesn't like 4-length strings for some reason????
-    // Might need to fix this in the raylib code itself
-    drawButton("Load ", MAIN_MENU_LOAD_BUTTON, load, 51);
-
+    drawButton("Load", MAIN_MENU_LOAD_BUTTON, load, 51);
     drawButton("High Scores", MAIN_MENU_HISCORE_BUTTON, hiscore, 51);
     drawButton("Exit", MAIN_MENU_EXIT_BUTTON, exit, 51);
 }
 
+// Function that draws a "button"
 void drawButton(char* label, Rectangle rec, Color c, int fontSize) {
+    // A button is a rectangle with centered text
     DrawRectangleRec(rec, c);
     DrawTextRec(alagard, label, centerText(rec, label, fontSize), fontSize, 1, 0, complementaryColor(c));
 }
 
+// Draws the pause menu
 void drawPauseMenu(World w) {
     drawPlaying(w, 1);
 
+    // Draws the message that the game is paused
     DrawTextRec(alagard, "Paused", centerText(PAUSE_MENU_LABEL, "Paused", 100), 100, 1, 0, WHITE);
 
+    // Sets the pause buttons colors
     Color resume = WHITE,
           save = WHITE,
           exit = WHITE;
 
+    // Makes the buttons change color when the mouse is on it
     if (pointInRect(PAUSE_MENU_RESUME_BUTTON, GetMousePosition())) {
         resume = BLACK;
     } else if (pointInRect(PAUSE_MENU_SAVE_BUTTON, GetMousePosition())) {
@@ -265,32 +290,41 @@ void drawPauseMenu(World w) {
         exit = BLACK;
     }
 
+    // Draws all the buttons in the main menu
     drawButton("Resume", PAUSE_MENU_RESUME_BUTTON, resume, 51);
     drawButton("Save", PAUSE_MENU_SAVE_BUTTON, save, 51);
     drawButton("Exit", PAUSE_MENU_EXIT_BUTTON, exit, 51);
 }
 
+// Draws the window when the user is asked a name
 void drawAskName(World w) {
     Color c = DARKGRAY;
     Color buttonColor = RAYWHITE;
 
+    // Makes the button change color when mouse is on it
     if (pointInRect(ASK_NAME_CONFIRM_BUTTON, GetMousePosition())) {
         buttonColor = BLACK;
     }
 
+    // Prints the text asking the users name
     DrawTextRec(alagard, "What's your name?", centerText(ASK_NAME_LABEL, "What's your name?", 52), 52, 1, 1, complementaryColor(c));
 
+    // Draws a rectangle in with the name will be written
     DrawRectangleRec(ASK_NAME_INPUT_BOX, c);
     DrawRectangleLinesEx(ASK_NAME_INPUT_BOX, 4, complementaryColor(c));
 
+    // Prints the player name
     DrawTextEx(alagard, w.player.name, (Vector2){ ASK_NAME_INPUT_BOX.x + 4, ASK_NAME_INPUT_BOX.y }, 48, 1, complementaryColor(c));
 
+    // Draws the confirm button
     drawButton("Confirm ", ASK_NAME_CONFIRM_BUTTON, buttonColor, 48);
 }
 
+// Function that draws the high score screen
 void drawHighScoreScreen(World w) {
     int i;
 
+    // Prints the message of high score
     DrawTextRec(
         alagard,
         "Highest scores of Hr.io:",
@@ -302,11 +336,13 @@ void drawHighScoreScreen(World w) {
     );
 
     Color c = DARKGRAY;
+    //Prints the all the high scores
     for (i = 0; i < HIGHSCORE_SIZE; i++) {
-        if (scores[i].score <= 0) {
+        if (scores[i].score <= 0) { // Only prints the score if its greater than zero
             break;
         }
 
+        // Creates a rectangle to print the score
         Rectangle rec;
         rec.x = SCREEN_WIDTH / 2 - 500 / 2;
         rec.y = HIGH_SCORE_LABEL.y + (i+1) * 50;
@@ -317,6 +353,7 @@ void drawHighScoreScreen(World w) {
 
         char* txt = FormatText("%s: %g", scores[i].name, scores[i].score);
 
+        // Draws the score in the rectangle
         DrawTextRec(
             alagard,
             txt,
@@ -330,6 +367,7 @@ void drawHighScoreScreen(World w) {
         c = complementaryColor(c);
     }
 
+    // Makes the back button and checks if the mouse is on it to change color
     Color bt = BLACK;
     if (pointInRect(HIGH_SCORE_BACK_BUTTON, GetMousePosition())) {
         bt = RAYWHITE;
@@ -337,6 +375,7 @@ void drawHighScoreScreen(World w) {
     drawButton("Back", HIGH_SCORE_BACK_BUTTON, bt, 32);
 }
 
+// Draw the enemy labels
 void drawLabel (World w) {
     // Draw Poisonous label
     DrawRectangle(25, 450, 30, 30, GREEN);
@@ -345,7 +384,6 @@ void drawLabel (World w) {
     // Draw Explosive label
     DrawRectangle(25, 500, 30, 30, ORANGE);
     DrawText("Explosive ", 60, 505, 24, WHITE);
-
 
     //Draw Normal label
     DrawRectangle(25, 550, 30, 30, RED);

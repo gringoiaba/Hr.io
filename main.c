@@ -15,18 +15,18 @@
 int main(void) {
     srand(time(NULL));
 
-    World w = newWorld(NULL);
+    World w = newWorld(NULL); // Creates a new world from scratch
 
-    loadScore();
-    initGraphics();
+    loadScore(); // Loads the high scores from previous games
+    initGraphics(); // Initiate the graphics
 
-    while (isGraphicsRunning()) {
+    while (isGraphicsRunning()) { // While the game is running
 
-        updateWorld(&w, 1/(float)60);
-        drawWorld(w);
+        updateWorld(&w, 1/(float)60); // Updates the world
+        drawWorld(w); // Draws the world
     }
-    saveScore();
-    endGraphics();
+    saveScore(); // Saves the player score
+    endGraphics(); // Ends the graphics
 
     return 0;
 }

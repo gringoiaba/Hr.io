@@ -5,12 +5,13 @@
 
 #define NAME_SIZE (50 + 1)
 
+// Structure that saves scores of a player
 typedef struct {
-    char name[NAME_SIZE];
-    float score;
+    char name[NAME_SIZE]; // Contains a name of the user
+    float score; // Score of the playthrough
 } PlayerScore;
 
-// Global highscore tracker
+// Global high score tracker
 PlayerScore scores[HIGHSCORE_SIZE];
 
 void insertScore(PlayerScore, int);

@@ -5,12 +5,12 @@
 #include "PlayerScore.h"
 
 typedef struct {
-    Vec2 position;
-    int isAlive;
-    float radius;
-    char name[NAME_SIZE];
+    Vec2 position; // Position of the ball within the world
+    int isAlive; // Boolean to indicate if a circle is alive
+    float radius; // Float of the circle radius
+    char name[NAME_SIZE]; // Name of the circle
 
-    float poisonTimeRemaining;
+    float poisonTimeRemaining; // Time remaining to a circle stop being poisoned
 } Ball;
 
 float newRadius (Ball, Ball);
