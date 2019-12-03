@@ -1,8 +1,9 @@
 #ifndef STRUCTS_VEC2_H
 #define STRUCTS_VEC2_H
 
+// Represents a coordinate within the world
 typedef struct {
-    float x, y;
+    float x, y; // X and Y position of the coordinate
 } Vec2;
 
 Vec2 randomPosition(int, int, int, int);
