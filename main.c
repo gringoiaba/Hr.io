@@ -18,7 +18,6 @@ int main(void) {
     World w = newWorld();
 
     loadScore();
-
     initGraphics();
 
     while (isGraphicsRunning()) {

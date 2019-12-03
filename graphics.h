@@ -88,9 +88,9 @@
                                               .width = 300,                        \
                                               .height = 50})
 
-#define HIGH_SCORE_SOMETHING ((Rectangle) {    .x = SCREEN_WIDTH/2 - 200/2,         \
-                                         .y = 100,                            \
-                                         .width = 1000,                       \
+#define HIGH_SCORE_LABEL ((Rectangle) {  .x = SCREEN_WIDTH/2 - 300/2,        \
+                                         .y = 50,                            \
+                                         .width = 300,                       \
                                          .height = 50})
 
 Camera2D cam;
