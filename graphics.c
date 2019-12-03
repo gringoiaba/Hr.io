@@ -62,9 +62,7 @@ void drawPlaying(World w, int showScore) {
     int i;
 
     cam.target = vec2ToVector2(w.player.position);
-    cam.zoom += (float)(GetMouseWheelMove() * 0.05f);
-
-
+    cam.zoom = 1 + 2/w.player.radius;
 
         BeginMode2D(cam);
 
