@@ -30,7 +30,7 @@ void drawWorld(World w) {
 
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+    ClearBackground(BLACK);
 
     switch (w.state) {
     case PLAYING:
@@ -129,21 +129,21 @@ void drawGameOver(World w) {
     drawPlaying(w, 0);
 
     // Make the world a bit darker
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.1));
+    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(DARKGRAY, 0.3));
 
     char totalPoints[51];
     sprintf(totalPoints, "Your total score was %.1f", w.elapsedTime);
 
-    DrawTextRec(alagard, "Game Over", centerText(GAME_OVER_LABEL, "Game Over", 56), 56, 1, 0, BLACK);
-    DrawTextRec(alagard, totalPoints, centerText(GAME_OVER_SCORE_LABEL, totalPoints, 42), 42, 1, 0, BLACK);
+    DrawTextRec(alagard, "Game Over", centerText(GAME_OVER_LABEL, "Game Over", 56), 56, 1, 0, WHITE);
+    DrawTextRec(alagard, totalPoints, centerText(GAME_OVER_SCORE_LABEL, totalPoints, 42), 42, 1, 0, WHITE);
 
-    Color restart = BLACK,
-          menu = BLACK;
+    Color restart = WHITE,
+          menu = WHITE;
 
     if (pointInRect(GAME_OVER_BUTTON, GetMousePosition())) {
-        restart = WHITE;
+        restart = BLACK;
     } else if (pointInRect(GAME_OVER_MENU_BUTTON, GetMousePosition())) {
-          menu = WHITE;
+          menu = BLACK;
     }
 
     DrawRectangleRec(GAME_OVER_BUTTON, restart);
@@ -214,21 +214,21 @@ void drawMainMenu(World w) {
 
     drawPlaying(w, 0);
 
-    DrawTextRec(alagard, "H r . i o", centerText(MAIN_MENU_TITLE_LABEL, "H r . i o", 100), 100, 1, 0, BLACK);
+    DrawTextRec(alagard, "H r . i o", centerText(MAIN_MENU_TITLE_LABEL, "H r . i o", 100), 100, 1, 0, WHITE);
 
     drawLabel(w);
 
-    Color start = BLACK,
-          load = BLACK,
-          hiscore = BLACK,
-          exit = BLACK;
+    Color start = WHITE,
+          load = WHITE,
+          hiscore = WHITE,
+          exit = WHITE;
 
     if (pointInRect(MAIN_MENU_START_BUTTON, GetMousePosition())) {
-        start = WHITE;
+        start = BLACK;
     } else if (pointInRect(MAIN_MENU_LOAD_BUTTON, GetMousePosition())) {
-          load = WHITE;
+          load = BLACK;
     } else if (pointInRect(MAIN_MENU_HISCORE_BUTTON, GetMousePosition())) {
-          hiscore = WHITE;
+          hiscore = BLACK;
     } else if (pointInRect(MAIN_MENU_EXIT_BUTTON, GetMousePosition())) {
           exit = RED;
     }
@@ -251,29 +251,27 @@ void drawButton(char* label, Rectangle rec, Color c, int fontSize) {
 void drawPauseMenu(World w) {
     drawPlaying(w, 1);
 
-    DrawTextRec(alagard, "Paused", centerText(PAUSE_MENU_LABEL, "Paused", 100), 100, 1, 0, BLACK);
+    DrawTextRec(alagard, "Paused", centerText(PAUSE_MENU_LABEL, "Paused", 100), 100, 1, 0, WHITE);
 
-    Color resume = BLACK,
-          save = BLACK,
-          exit = BLACK;
+    Color resume = WHITE,
+          save = WHITE,
+          exit = WHITE;
 
     if (pointInRect(PAUSE_MENU_RESUME_BUTTON, GetMousePosition())) {
-        resume = WHITE;
+        resume = BLACK;
     } else if (pointInRect(PAUSE_MENU_SAVE_BUTTON, GetMousePosition())) {
-        save = WHITE;
+        save = BLACK;
     } else if (pointInRect(PAUSE_MENU_EXIT_BUTTON, GetMousePosition())) {
-        exit = WHITE;
+        exit = BLACK;
     }
 
     drawButton("Resume", PAUSE_MENU_RESUME_BUTTON, resume, 51);
-    // HACK: Raylib doesn't like 4-length strings for some reason????
-    // Might need to fix this in the raylib code itself
-    drawButton("Save ", PAUSE_MENU_SAVE_BUTTON, save, 51);
+    drawButton("Save", PAUSE_MENU_SAVE_BUTTON, save, 51);
     drawButton("Exit", PAUSE_MENU_EXIT_BUTTON, exit, 51);
 }
 
 void drawAskName(World w) {
-    Color c = LIGHTGRAY;
+    Color c = DARKGRAY;
     Color buttonColor = RAYWHITE;
 
     if (pointInRect(ASK_NAME_CONFIRM_BUTTON, GetMousePosition())) {
@@ -287,7 +285,7 @@ void drawAskName(World w) {
 
     DrawTextEx(alagard, w.player.name, (Vector2){ ASK_NAME_INPUT_BOX.x + 4, ASK_NAME_INPUT_BOX.y }, 48, 1, complementaryColor(c));
 
-    drawButton("Confirm ", ASK_NAME_CONFIRM_BUTTON, complementaryColor(buttonColor), 48);
+    drawButton("Confirm ", ASK_NAME_CONFIRM_BUTTON, buttonColor, 48);
 }
 
 void drawHighScoreScreen(World w) {
@@ -300,10 +298,10 @@ void drawHighScoreScreen(World w) {
         32,
         1,
         0,
-        BLACK
+        WHITE
     );
 
-    Color c = LIGHTGRAY;
+    Color c = DARKGRAY;
     for (i = 0; i < HIGHSCORE_SIZE; i++) {
         if (scores[i].score <= 0) {
             break;
@@ -342,15 +340,15 @@ void drawHighScoreScreen(World w) {
 void drawLabel (World w) {
     // Draw Poisonous label
     DrawRectangle(25, 450, 30, 30, GREEN);
-    DrawText("Poisonous ", 60, 455, 24, BLACK);
+    DrawText("Poisonous ", 60, 455, 24, WHITE);
 
     // Draw Explosive label
     DrawRectangle(25, 500, 30, 30, ORANGE);
-    DrawText("Explosive ", 60, 505, 24, BLACK);
+    DrawText("Explosive ", 60, 505, 24, WHITE);
 
 
     //Draw Normal label
     DrawRectangle(25, 550, 30, 30, RED);
-    DrawText("Normal ", 60, 555, 24, BLACK);
+    DrawText("Normal ", 60, 555, 24, WHITE);
 
 }

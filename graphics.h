@@ -5,8 +5,8 @@
 #include "Structs/Vec2.h"
 #include "raylib.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 720
 
 #define GAME_OVER_LABEL ((Rectangle) {.x = SCREEN_WIDTH/2 - 300/2, \
                                       .y = SCREEN_HEIGHT/2 - 50,   \
@@ -115,5 +115,8 @@ void drawMainMenu(World);
 void drawButton(char*, Rectangle, Color, int);
 void drawPauseMenu(World);
 void drawAskName(World);
+void drawHighScoreScreen(World);
+void drawLabel(World);
+
 
 #endif // GRAPHICS_H

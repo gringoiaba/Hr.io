@@ -15,6 +15,8 @@ void updateInputGameOver(World*, float);
 void updateInputPauseMenu(World*, float);
 void updateInputMainMenu(World*, float);
 void updateAskName(World*, float);
+void updateHighScoreScreen(World*, float);
+
 
 
 

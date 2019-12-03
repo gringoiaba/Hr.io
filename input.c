@@ -6,6 +6,7 @@
 #include "raylib.h"
 #include "Structs/PlayerScore.h"
 #include <stdio.h>
+#include <string.h>
 
 void updateInput(World* w, float delta) {
     switch (w->state) {
@@ -63,7 +64,7 @@ void updateInputGameOver(World* w, float delta) {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 
         if (pointInRect(GAME_OVER_BUTTON, GetMousePosition())){
-            *w = newWorld();
+            *w = newWorld(w);
             w->state = PLAYING;
 
         } else if (pointInRect(GAME_OVER_MENU_BUTTON, GetMousePosition())) {
@@ -83,7 +84,7 @@ void updateInputMainMenu(World* w, float delta) {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 
         if (pointInRect(MAIN_MENU_START_BUTTON, GetMousePosition())){
-            *w = newWorld();
+            *w = newWorld(NULL);
             w->state = ASK_NAME;
 
         } else if (pointInRect(MAIN_MENU_LOAD_BUTTON, GetMousePosition())) {
@@ -125,7 +126,7 @@ void updateAskName(World* w, float delta) {
 
     if (key > 0) {
         // If the key is a letter...
-        if (key >= 'A' && key <= 'z') {
+        if ((key >= '0' && key <= '9') || (key >= 'A' && key <= 'z') || key == ' ') {
             tmp[0] = (char)key;
             strcat(w->player.name, tmp);
         }
@@ -141,7 +142,6 @@ void updateAskName(World* w, float delta) {
 
     if (pointInRect(ASK_NAME_CONFIRM_BUTTON, GetMousePosition())) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && strlen(w->player.name) > 0) {
-            strcat(w->player.name, " ");
             w->state = PLAYING;
         }
     }

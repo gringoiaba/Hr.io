@@ -19,5 +19,7 @@ float radiusToArea (float);
 void printBall(Ball);
 int isInside(Vec2, Ball);
 void moveCircle(Ball*, Vec2);
+float getCircleSpeed(Ball);
+
 
 #endif

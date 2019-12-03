@@ -16,6 +16,9 @@ void updateWorld(World *w, float deltaTime) {
     case PLAYING:
         updatePlaying(w, deltaTime);
         break;
+    default:
+        // World doesn't change when not playing.
+        break;
     }
 }
 
@@ -209,7 +212,7 @@ void moveUnused(World* w) {
     }
 }
 
-World newWorld() {
+World newWorld(World *old) {
     Ball b = {
         .position = { 0, 0 },
         .isAlive = 1,
@@ -222,6 +225,10 @@ World newWorld() {
         .player = b,
         .state = MAIN_MENU,
     };
+
+    if (old) {
+        strcpy(w.player.name, old->player.name);
+    }
 
     return w;
 }

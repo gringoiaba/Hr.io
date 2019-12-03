@@ -50,7 +50,7 @@ void killPlayer(World*, Enemy*, int);
 void updatePoison(World*, float);
 void moveUnused(World*);
 void updatePlaying(World*, float);
-World newWorld();
+World newWorld(World*);
 int loadWorld(World*);
 void saveWorld(World);
 

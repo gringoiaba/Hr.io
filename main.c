@@ -15,7 +15,7 @@
 int main(void) {
     srand(time(NULL));
 
-    World w = newWorld();
+    World w = newWorld(NULL);
 
     loadScore();
     initGraphics();
