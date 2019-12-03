@@ -17,9 +17,4 @@ void updateInputMainMenu(World*, float);
 void updateAskName(World*, float);
 void updateHighScoreScreen(World*, float);
 
-
-
-
-
-
 #endif // INPUT_H

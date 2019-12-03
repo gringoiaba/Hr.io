@@ -8,10 +8,13 @@
 #include "../input.h"
 
 void updateWorld(World *w, float deltaTime) {
+    // Update the input
     updateInput(w, deltaTime);
 
     switch (w->state) {
     case MAIN_MENU:
+        // In the main menu, the world should update
+        // but the player should not be there (hence the lack of a break)
         w->player.isAlive = 0;
     case PLAYING:
         updatePlaying(w, deltaTime);
@@ -22,20 +25,26 @@ void updateWorld(World *w, float deltaTime) {
     }
 }
 
+// Updates the PLAYING state
 void updatePlaying(World* w, float deltaTime) {
+    // Increase score
     w->elapsedTime += deltaTime;
 
+    // Respawn dead things
     respawnEnemies(w);
     respawnFoods(w);
 
+    // Update the enemies
     updateEnemies(w, deltaTime);
 
+    // Update the poison
     updatePoison(w, deltaTime);
 
+    // Check for collisions
     checkCollisions(w);
     checkFoods(w);
 
-    // Moves everything that is simply too far away from the player
+    // Moves everything that is too far away from the player
     moveUnused(w);
 }
 
@@ -85,6 +94,8 @@ void checkFoods (World *w) {
     int i, j;
 
     if (w->player.isAlive) {
+        // For all foods, if the player is eating it,
+        // kill the food and increase the player's radius
         for (i = 0; i < NUM_FOOD; i++) {
             if (w->foods[i].isAlive && isInside(w->foods[i].position, w->player)) {
                 w->foods[i].isAlive = 0;
@@ -93,6 +104,7 @@ void checkFoods (World *w) {
         }
     }
 
+    // Do the same for all the enemies
     for (i = 0; i < NUM_ENEMIES; i++) {
         if (!w->enemies[i].ball.isAlive) {
             continue;
@@ -110,8 +122,11 @@ void checkFoods (World *w) {
 
 }
 
+// Respawns foods
 void respawnFoods(World *w) {
     int i;
+    // For all dead foods, revive them
+    // and assing it a new random position
     for (i = 0; i < NUM_FOOD; i++) {
         if (!w->foods[i].isAlive) {
             w->foods[i].isAlive = 1;
@@ -125,12 +140,14 @@ void respawnFoods(World *w) {
 }
 
 // Respawns enemies
-// TODO: implement random traits
 void respawnEnemies(World *w) {
     int i;
+    // For all dead enemies,
+    // revive them ang generate random traits
     for (i = 0; i < NUM_ENEMIES; i++) {
         if (!w->enemies[i].ball.isAlive) {
             w->enemies[i].ball.isAlive = 1;
+            // Random position not so far from the player
             w->enemies[i].ball.position = randomPosition(WORLD_LEFT_BOUNDARY + w->player.position.x,
                                                          WORLD_RIGHT_BOUNDARY + w->player.position.x,
                                                          WORLD_TOP_BOUNDARY + w->player.position.y,
@@ -146,6 +163,7 @@ void respawnEnemies(World *w) {
     }
 }
 
+// Update all enemies
 void updateEnemies(World *w, float delta) {
     int i;
     for (i = 0; i < NUM_ENEMIES; i++) {
@@ -153,36 +171,49 @@ void updateEnemies(World *w, float delta) {
     }
 }
 
+// Kill the player
 void killPlayer(World* w, Enemy* killer, int index) {
     w->player.isAlive = 0;
+    // Increase the killer radius
     killer->ball.radius = newRadius(killer->ball, w->player);
 
+    // Create the player score
     PlayerScore score;
     strcpy(score.name, w->player.name);
     score.score = w->elapsedTime;
 
+    // Try inserting it into the
+    // highscore board
     insertScore(score, 0);
 
+    // Go to the game over state
     w->state = GAME_OVER;
 }
 
+// Updates the poison effect
 void updatePoison(World *w, float delta) {
     int i;
 
+    // For all enemies, if it is poisoned,
+    // reduce it's area and decrease the remaining
+    // poison time
     for (i = 0; i < NUM_ENEMIES; i++) {
         // If is poisoned...
         if (w->enemies[i].ball.poisonTimeRemaining > 0) {
             Ball* b = &w->enemies[i].ball;
 
+            // Decrease the area in 10% per second
             float area = radiusToArea(b->radius);
             area -= area * 0.1f * delta;
 
             b->radius = areaToRadius(area);
 
+            // Decrease the remaining poison time
             b->poisonTimeRemaining -= delta;
         }
     }
 
+    // Do the same for the player
     if (w->player.poisonTimeRemaining > 0) {
         Ball* b = &w->player;
 
@@ -196,15 +227,21 @@ void updatePoison(World *w, float delta) {
     }
 }
 
+// Kills circles that are simply too far from the player to make a difference
+// This creates the impression of a "infinite" world
 void moveUnused(World* w) {
     int i;
 
+    // For all enemies, if it's distance is too big,
+    // kill it
     for (i = 0; i < NUM_ENEMIES; i++) {
         if (distance(w->enemies[i].ball.position, w->player.position) > MAX_PLAYER_DISTANCE) {
             w->enemies[i].ball.isAlive = 0;
         }
     }
 
+    // For all foods, if it's distance is too big,
+    // kill it
     for (i = 0; i < NUM_FOOD; i++) {
         if (distance(w->foods[i].position, w->player.position) > MAX_PLAYER_DISTANCE) {
             w->foods[i].isAlive = 0;
@@ -212,6 +249,9 @@ void moveUnused(World* w) {
     }
 }
 
+// Initializes a world to it's basic state
+// If the parameter "old" is not null, some data
+// is carried to the new world
 World newWorld(World *old) {
     Ball b = {
         .position = { 0, 0 },
@@ -227,23 +267,28 @@ World newWorld(World *old) {
     };
 
     if (old) {
+        // Carry over the player's name from the old world
         strcpy(w.player.name, old->player.name);
     }
 
     return w;
 }
 
-
+// Saves a world
 void saveWorld(World w) {
     FILE *f;
     f = fopen("save","wb");
     fwrite(&w, sizeof(World), 1, f);
 }
 
+// Tries to load a world.
+// Returns 1 when successful,
+// 0 otherwise
 int loadWorld(World *w) {
     FILE *f;
     f = fopen("save", "rb");
     if (f != NULL) {
+        // Read a world in the file onto w
         fread(w, sizeof(World), 1, f);
         return 1;
     }
