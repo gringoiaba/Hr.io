@@ -25,6 +25,8 @@ void updateInput(World* w, float delta) {
         break;
     case ASK_NAME:
         updateAskName(w, delta);
+    case HIGH_SCORE_SCREEN:
+        updateHighScoreScreen(w, delta);
         break;
     }
 }
@@ -144,5 +146,11 @@ void updateAskName(World* w, float delta) {
             strcat(w->player.name, " ");
             w->state = PLAYING;
         }
+    }
+}
+
+void updateHighScoreScreen(World* w, float delta) {
+    if (pointInRect(HIGH_SCORE_BACK_BUTTON, GetMousePosition()) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        w->state = MAIN_MENU;
     }
 }

@@ -93,6 +93,12 @@
                                          .width = 300,                       \
                                          .height = 50})
 
+#define HIGH_SCORE_BACK_BUTTON ((Rectangle) {  .x = 0,        \
+                                               .y = SCREEN_HEIGHT - 50,            \
+                                               .width = 100,                       \
+                                               .height = 50})
+
+
 Camera2D cam;
 int isRunning;
 

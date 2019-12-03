@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 2009588788 HEAD
 
-1575297657 source:x:\hr.io\graphics.c
+1575381955 source:x:\hr.io\graphics.c
 	"graphics.h"
 	"raylib.h"
 	"Structs/Vec2.h"
@@ -37,12 +37,12 @@
 
 1575295514 D
 
-1575295911 x:\hr.io\graphics.h
+1575381875 x:\hr.io\graphics.h
 	"Structs/World.h"
 	"Structs/Vec2.h"
 	"raylib.h"
 
-1575293899 x:\hr.io\structs\world.h
+1575382241 x:\hr.io\structs\world.h
 	"Enemy.h"
 	"Circle.h"
 	"PlayerScore.h"
@@ -67,7 +67,7 @@
 	"Structs/PlayerScore.h"
 	"raylib.h"
 
-1575294055 source:x:\hr.io\input.c
+1575382070 source:x:\hr.io\input.c
 	"input.h"
 	"Structs/World.h"
 	"Structs/Circle.h"
@@ -96,7 +96,7 @@
 	"Vec2.h"
 	"Circle.h"
 
-1575293496 source:x:\hr.io\structs\enemy.c
+1575382182 source:x:\hr.io\structs\enemy.c
 	"Circle.h"
 	"Enemy.h"
 	"World.h"

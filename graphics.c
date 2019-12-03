@@ -331,6 +331,12 @@ void drawHighScoreScreen(World w) {
 
         c = complementaryColor(c);
     }
+
+    Color bt = BLACK;
+    if (pointInRect(HIGH_SCORE_BACK_BUTTON, GetMousePosition())) {
+        bt = RAYWHITE;
+    }
+    drawButton("Back", HIGH_SCORE_BACK_BUTTON, bt, 32);
 }
 
 void drawLabel(World w) {

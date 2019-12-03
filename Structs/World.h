@@ -6,7 +6,7 @@
 #define STRUCTS_WORLD_H
 
 #define NUM_ENEMIES 40
-#define NUM_FOOD 200
+#define NUM_FOOD 600
 
 #define FOOD_RADIUS 4
 #define BASE_RADIUS 10
