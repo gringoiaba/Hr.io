@@ -98,7 +98,6 @@
                                                .width = 100,                       \
                                                .height = 50})
 
-
 Camera2D cam;
 int isRunning;
 
