@@ -12,7 +12,7 @@ typedef struct {
 } PlayerScore;
 
 // Global high score tracker
-PlayerScore scores[HIGHSCORE_SIZE];
+PlayerScore* getScores();
 
 void insertScore(PlayerScore, int);
 void loadScore();

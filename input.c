@@ -34,7 +34,7 @@ void updateInput(World* w, float delta) {
 // Moves the player to chase the cursor
 void movePlayer(World* w, float delta) {
     // Get the mouse position
-    Vec2 mousePos = vector2ToVec2(GetScreenToWorld2D(GetMousePosition(), cam));
+    Vec2 mousePos = vector2ToVec2(GetScreenToWorld2D(GetMousePosition(), getCam()));
 
     // Calculate the angle between the player and the mouse
     float angle = angleBetween(w->player.position, mousePos);
@@ -114,7 +114,7 @@ void updateInputMainMenu(World* w, float delta) {
 
         // If the exit button was clicked, tell the game to quit
         } else if (pointInRect(MAIN_MENU_EXIT_BUTTON, GetMousePosition())) {
-            isRunning = 0;
+            setIsRunning(0);
         }
     }
 }

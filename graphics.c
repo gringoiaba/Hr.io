@@ -10,7 +10,16 @@
 #define newVector2(x, y) ((Vector2) {x, y})
 
 Font alagard;
+Camera2D cam;
+int isRunning;
 
+Camera2D getCam() {
+    return cam;
+}
+
+void setIsRunning(int r) {
+    isRunning = r;
+}
 
 // Initiates the main graphics of the game
 void initGraphics() {
@@ -338,7 +347,7 @@ void drawHighScoreScreen(World w) {
     Color c = DARKGRAY;
     //Prints the all the high scores
     for (i = 0; i < HIGHSCORE_SIZE; i++) {
-        if (scores[i].score <= 0) { // Only prints the score if its greater than zero
+        if (getScores()[i].score <= 0) { // Only prints the score if its greater than zero
             break;
         }
 
@@ -351,7 +360,7 @@ void drawHighScoreScreen(World w) {
 
         DrawRectangleRec(rec, c);
 
-        char* txt = FormatText("%s: %g", scores[i].name, scores[i].score);
+        char* txt = FormatText("%s: %g", getScores()[i].name, getScores()[i].score);
 
         // Draws the score in the rectangle
         DrawTextRec(

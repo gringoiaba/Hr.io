@@ -1,6 +1,11 @@
 #include "PlayerScore.h"
 #include <stdio.h>
 
+PlayerScore scores[HIGHSCORE_SIZE];
+PlayerScore* getScores() {
+    return scores;
+}
+
 // Inserts a score in a sorted way, so that new scores
 // get ordered or discarded accordingly
 void insertScore(PlayerScore newScore, int index) {

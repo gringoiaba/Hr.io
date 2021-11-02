@@ -98,8 +98,8 @@
                                                .width = 100,                       \
                                                .height = 50})
 
-Camera2D cam;
-int isRunning;
+Camera2D getCam();
+void setIsRunning(int);
 
 void initGraphics();
 void drawWorld(World);
